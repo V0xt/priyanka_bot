@@ -1,1 +1,1 @@
-A simple chat bot for discord
+A simple chat bot for discord app
