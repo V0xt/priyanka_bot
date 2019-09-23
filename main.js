@@ -186,6 +186,6 @@ httpGetAsync = (url, callback) => {
 // Get your bot's secret token from:
 // https://discordapp.com/developers/applications/
 // Click on your application -> Bot -> Token -> "Click to Reveal Token"
-bot_secret_token = "NjI1MzQ5OTY3NzMyNjcwNDY0.XYjcJw.Fox928CDa_NBblHC_4wPQ_GvtNE"
+bot_secret_token = "xxx"
 
 client.login(bot_secret_token)
