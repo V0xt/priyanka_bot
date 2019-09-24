@@ -6,7 +6,7 @@ const commandToFuncMapper = ({
     'help' : (arguments, receivedMessage) => helpCommand (arguments, receivedMessage),
     'multiply' : (arguments, receivedMessage) => multiplyCommand (arguments, receivedMessage),
     '8ball' : (arguments, receivedMessage) => randomWord (arguments, receivedMessage),
-    'ping' : receivedMessage.channel.send ("Pong!"),
+    'ping' : receivedMessage.channel.send ("Pong!"), // ??????????????????????????????????
     'fortune' : (arguments, receivedMessage) => getFortune (arguments, receivedMessage)     
 });
 
