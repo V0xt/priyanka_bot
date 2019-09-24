@@ -3,13 +3,15 @@ const client = new Discord.Client();
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 const commandToFuncMapper = ({    
-    'help' : () => helpCommand (arguments, receivedMessage),
-    'multiply' : () => multiplyCommand (arguments, receivedMessage),
-    '8ball' : () => randomWord (arguments, receivedMessage),
-    'ping' : () => receivedMessage.channel.send ("Pong!"),
-    'fortune' : () => getFortune (arguments, receivedMessage)     
+    'help' : (arguments, receivedMessage) => helpCommand (arguments, receivedMessage),
+    'multiply' : (arguments, receivedMessage) => multiplyCommand (arguments, receivedMessage),
+    '8ball' : (arguments, receivedMessage) => randomWord (arguments, receivedMessage),
+    'ping' : (receivedMessage) => receivedMessage.channel.send ("Pong!"),
+    'fortune' : (arguments, receivedMessage) => getFortune (arguments, receivedMessage),
+    'bitcoin' : (arguments, receivedMessage) => getCurrentBitcoinPrice (arguments, receivedMessage),
+    'weather' : (arguments, receivedMessage) => getCurrentWeather (arguments, receivedMessage)     
 });
-
+        
 client.on('ready', () => {
     console.log("Connected as " + client.user.tag);
     // List servers the bot is connected to
@@ -77,46 +79,29 @@ processCommand = (receivedMessage) => {
     console.log(primaryCommand);
 
     
-    //commandToFuncMapper[primaryCommand](arguments, receivedMessage);
+    commandToFuncMapper[primaryCommand](arguments, receivedMessage);
 
 
-    if (primaryCommand == "help") {
-        helpCommand(arguments, receivedMessage);
-    } else if (primaryCommand == "multiply") {
-        multiplyCommand(arguments, receivedMessage);
-    } else if (primaryCommand == "8ball") {
-        randomWord(arguments, receivedMessage);
-    } else if (primaryCommand == 'ping') {
-        //receivedMessage.channel.send("Pong!");
-    } else if (primaryCommand == 'fortune') {
-        getFortune(receivedMessage);
-    } else if (primaryCommand == 'bitcoin') {
-        getCurrentBitcoinPrice(receivedMessage);
-    } else if (primaryCommand == 'weather') {
-        getCurrentWeather(arguments, receivedMessage);
-    } else {
-        receivedMessage.channel.send("I don't understand the command. Try `!help` or `!multiply`");
-    }
 }
 
 function helpCommand (arguments, receivedMessage) {
     if (arguments.length > 0) {
-        receivedMessage.channel.send("It looks like you might need help with " + "`" + arguments + "`")
+        receivedMessage.channel.send("It looks like you might need help with " + "`" + arguments + "`");
     } else {
-        receivedMessage.channel.send("I'm not sure what you need help with. Try `!help [topic]`")
+        receivedMessage.channel.send("I'm not sure what you need help with. Try `!help [topic]`");
     }
 }
 
 function multiplyCommand (arguments, receivedMessage) {
     if (arguments.length < 2) {
-        receivedMessage.channel.send("Not enough values to multiply. Try `!multiply 2 4 10` or `!multiply 5.2 7`")
+        receivedMessage.channel.send("Not enough values to multiply. Try `!multiply 2 4 10` or `!multiply 5.2 7`");
         return
     }
     let product = 1 
     arguments.forEach((value) => {
-        product = product * parseFloat(value)        
+        product = product * parseFloat(value);        
     })
-    receivedMessage.channel.send("The product of " + arguments.join(', ') + " multiplied together is: " + product.toString())
+    receivedMessage.channel.send("The product of " + arguments.join(', ') + " multiplied together is: " + product.toString());
 }
 
 function randomWord (arguments, receivedMessage) {
@@ -127,10 +112,10 @@ function randomWord (arguments, receivedMessage) {
         'maybe'
     ]    
     let randomAnswer = Math.floor(Math.random() * Math.floor(answers.length));
-    receivedMessage.channel.send('I think `' + answers[randomAnswer] + '.`')
+    receivedMessage.channel.send('I think `' + answers[randomAnswer] + '.`');
 }
 
-function getFortune (receivedMessage) {
+function getFortune (arguments, receivedMessage) {
     let fortunesLimit = 1;
     let fortunesToSkip = Math.floor(Math.random() * (540 - 1 + 1)) + 1;
     console.log(fortunesToSkip);
@@ -142,7 +127,7 @@ function getFortune (receivedMessage) {
     });
 }
 
-function getCurrentBitcoinPrice (receivedMessage) {
+function getCurrentBitcoinPrice (arguments, receivedMessage) {
     let url = 'https://blockchain.info/ticker';
 
     httpGetAsync(url, callback = (response) => {
@@ -186,6 +171,6 @@ httpGetAsync = (url, callback) => {
 // Get your bot's secret token from:
 // https://discordapp.com/developers/applications/
 // Click on your application -> Bot -> Token -> "Click to Reveal Token"
-bot_secret_token = "xxx"
+bot_secret_token = "NjI1MzQ5OTY3NzMyNjcwNDY0.XYoMPQ.4thUTSHX7gpy3hzdJuwNrK-3LhA";
 
-client.login(bot_secret_token)
+client.login(bot_secret_token);
