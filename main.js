@@ -3,11 +3,11 @@ const client = new Discord.Client();
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 const commandToFuncMapper = ({    
-    'help' : () => helpCommand (arguments, receivedMessage),
-    'multiply' : () => multiplyCommand (arguments, receivedMessage),
-    '8ball' : () => randomWord (arguments, receivedMessage),
-    'ping' : () => receivedMessage.channel.send ("Pong!"),
-    'fortune' : () => getFortune (arguments, receivedMessage)     
+    'help' : (arguments, receivedMessage) => helpCommand (arguments, receivedMessage),
+    'multiply' : (arguments, receivedMessage) => multiplyCommand (arguments, receivedMessage),
+    '8ball' : (arguments, receivedMessage) => randomWord (arguments, receivedMessage),
+    'ping' : receivedMessage.channel.send ("Pong!"),
+    'fortune' : (arguments, receivedMessage) => getFortune (arguments, receivedMessage)     
 });
 
 client.on('ready', () => {
@@ -22,7 +22,7 @@ client.on('ready', () => {
         })
     })
     // Sending message to channel
-    var generalChannel = client.channels.get("625350794949951491") // Replace with known channel ID
+    var generalChannel = client.channels.get("625350794949951491"); // Replace with known channel ID
     generalChannel.send("Hello, world!"); 
 
     // Set bot status to: "Playing with JavaScript"
