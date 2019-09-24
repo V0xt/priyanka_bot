@@ -6,10 +6,15 @@ const commandToFuncMapper = ({
     'help' : (arguments, receivedMessage) => helpCommand (arguments, receivedMessage),
     'multiply' : (arguments, receivedMessage) => multiplyCommand (arguments, receivedMessage),
     '8ball' : (arguments, receivedMessage) => randomWord (arguments, receivedMessage),
+<<<<<<< HEAD
     'ping' : (receivedMessage) => receivedMessage.channel.send ("Pong!"),
     'fortune' : (arguments, receivedMessage) => getFortune (arguments, receivedMessage),
     'bitcoin' : (arguments, receivedMessage) => getCurrentBitcoinPrice (arguments, receivedMessage),
     'weather' : (arguments, receivedMessage) => getCurrentWeather (arguments, receivedMessage)     
+=======
+    'ping' : receivedMessage.channel.send ("Pong!"), // ??????????????????????????????????
+    'fortune' : (arguments, receivedMessage) => getFortune (arguments, receivedMessage)     
+>>>>>>> f4e17f6de67c9c66fcc2ea42f80221219524b44f
 });
         
 client.on('ready', () => {
@@ -24,7 +29,7 @@ client.on('ready', () => {
         })
     })
     // Sending message to channel
-    var generalChannel = client.channels.get("625350794949951491") // Replace with known channel ID
+    var generalChannel = client.channels.get("625350794949951491"); // Replace with known channel ID
     generalChannel.send("Hello, world!"); 
 
     // Set bot status to: "Playing with JavaScript"
@@ -173,4 +178,8 @@ httpGetAsync = (url, callback) => {
 // Click on your application -> Bot -> Token -> "Click to Reveal Token"
 bot_secret_token = "NjI1MzQ5OTY3NzMyNjcwNDY0.XYoMPQ.4thUTSHX7gpy3hzdJuwNrK-3LhA";
 
+<<<<<<< HEAD
 client.login(bot_secret_token);
+=======
+client.login(bot_secret_token)
+>>>>>>> f4e17f6de67c9c66fcc2ea42f80221219524b44f
