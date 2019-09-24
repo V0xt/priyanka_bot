@@ -17,6 +17,7 @@ const commandToFuncMapper = ({
     'fortune' : (arguments, receivedMessage) => getFortune (arguments, receivedMessage),
     'bitcoin' : (arguments, receivedMessage) => getCurrentBitcoinPrice (arguments, receivedMessage),
     'weather' : (arguments, receivedMessage) => getCurrentWeather (arguments, receivedMessage),
+    'info' : (arguments, receivedMessage) => infoCommand (arguments, receivedMessage),
     'play' : (arguments, receivedMessage) => play (arguments, receivedMessage),
     'skip' : (arguments, receivedMessage) => skip (arguments, receivedMessage),
     'stop' : (arguments, receivedMessage) => stop (arguments, receivedMessage)    
@@ -35,7 +36,7 @@ client.on('ready', () => {
     });
     // Sending message to channel
     var generalChannel = client.channels.get("625350794949951491"); // Replace with known channel ID
-    generalChannel.send("Hello, world!"); 
+    generalChannel.send("HeyGuys! Type `!help` to get commands list."); 
 
     client.user.setActivity("with JavaScript");
 
@@ -84,15 +85,22 @@ processCommand = (receivedMessage) => {
         commandToFuncMapper[primaryCommand](arguments, receivedMessage);
     }
     catch {
-        receivedMessage.channel.send("I don't understand the command. Try `!help` or `!info`");
+        receivedMessage.channel.send("I don't understand the command. Try `!help` or `!info`.");
     };
+}
+
+function infoCommand (arguments, receivedMessage) {
+    receivedMessage.channel.send('Type `!help` to get full list of available commands\n' + 
+        'Follow the link to get more info about the bot https://github.com/V0xt/Discord_bot');
 }
 
 function helpCommand (arguments, receivedMessage) {
     if (arguments.length > 0) {
-        receivedMessage.channel.send("It looks like you might need help with " + "`" + arguments + "`");
+        receivedMessage.channel.send("It looks like you might need help with " + "`" + arguments + "`.");
     } else {
-        receivedMessage.channel.send("I'm not sure what you need help with. Try `!help [topic]`");
+        let commandsKeys = Object.keys(commandToFuncMapper);        
+        receivedMessage.channel.send("All available commands:\n" + 
+            "`" + commandsKeys.map(i => '!' + i ).join('\n') + "`" + "\nYou can also try `!help [topic]`.");
     }
 }
 

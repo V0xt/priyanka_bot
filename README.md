@@ -1,6 +1,8 @@
-A simple chat bot for discord app  
+# JS chat bot for Discord
+
+
+## Available commands:
   
-Available commands:  
 !help    
 !help [someTopic]   
 !multiply [2] [4] [..]     
