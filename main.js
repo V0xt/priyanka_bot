@@ -6,15 +6,10 @@ const commandToFuncMapper = ({
     'help' : (arguments, receivedMessage) => helpCommand (arguments, receivedMessage),
     'multiply' : (arguments, receivedMessage) => multiplyCommand (arguments, receivedMessage),
     '8ball' : (arguments, receivedMessage) => randomWord (arguments, receivedMessage),
-<<<<<<< HEAD
-    'ping' : (receivedMessage) => receivedMessage.channel.send ("Pong!"),
+    'ping' : (arguments, receivedMessage) => receivedMessage.channel.send ("Pong!"),
     'fortune' : (arguments, receivedMessage) => getFortune (arguments, receivedMessage),
     'bitcoin' : (arguments, receivedMessage) => getCurrentBitcoinPrice (arguments, receivedMessage),
     'weather' : (arguments, receivedMessage) => getCurrentWeather (arguments, receivedMessage)     
-=======
-    'ping' : receivedMessage.channel.send ("Pong!"), // ??????????????????????????????????
-    'fortune' : (arguments, receivedMessage) => getFortune (arguments, receivedMessage)     
->>>>>>> f4e17f6de67c9c66fcc2ea42f80221219524b44f
 });
         
 client.on('ready', () => {
@@ -75,17 +70,15 @@ processCommand = (receivedMessage) => {
     let primaryCommand = splitCommand[0];                // The first word directly after the exclamation is the command
     let arguments = splitCommand.slice(1);               // All other words are arguments/parameters/options for the command
     
-
     console.log("Command received: " + primaryCommand);
     console.log("Arguments: " + arguments);              // There may not be any arguments
-
-    //commandToFuncMapper.primaryCommand(arguments, receivedMessage);
-    
-    console.log(primaryCommand);
-
-    
-    commandToFuncMapper[primaryCommand](arguments, receivedMessage);
-
+     
+    try {
+        commandToFuncMapper[primaryCommand](arguments, receivedMessage);
+    }
+    catch {
+        receivedMessage.channel.send("I don't understand the command. Try `!help` or `!info`");
+    };
 
 }
 
@@ -178,8 +171,4 @@ httpGetAsync = (url, callback) => {
 // Click on your application -> Bot -> Token -> "Click to Reveal Token"
 bot_secret_token = "NjI1MzQ5OTY3NzMyNjcwNDY0.XYoMPQ.4thUTSHX7gpy3hzdJuwNrK-3LhA";
 
-<<<<<<< HEAD
 client.login(bot_secret_token);
-=======
-client.login(bot_secret_token)
->>>>>>> f4e17f6de67c9c66fcc2ea42f80221219524b44f
