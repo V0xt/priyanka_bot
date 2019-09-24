@@ -1,6 +1,13 @@
 const Discord = require('discord.js');
-const client = new Discord.Client();
+const {
+	prefix,
+	token,
+} = require('./config.json');
+const ytdl = require('ytdl-core');
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+
+const client = new Discord.Client();
+client.login(token);
 
 const commandToFuncMapper = ({    
     'help' : (arguments, receivedMessage) => helpCommand (arguments, receivedMessage),
@@ -9,60 +16,60 @@ const commandToFuncMapper = ({
     'ping' : (arguments, receivedMessage) => receivedMessage.channel.send ("Pong!"),
     'fortune' : (arguments, receivedMessage) => getFortune (arguments, receivedMessage),
     'bitcoin' : (arguments, receivedMessage) => getCurrentBitcoinPrice (arguments, receivedMessage),
-    'weather' : (arguments, receivedMessage) => getCurrentWeather (arguments, receivedMessage)     
+    'weather' : (arguments, receivedMessage) => getCurrentWeather (arguments, receivedMessage),
+    'play' : (arguments, receivedMessage) => play (arguments, receivedMessage),
+    'skip' : (arguments, receivedMessage) => skip (arguments, receivedMessage),
+    'stop' : (arguments, receivedMessage) => stop (arguments, receivedMessage)    
 });
         
 client.on('ready', () => {
     console.log("Connected as " + client.user.tag);
     // List servers the bot is connected to
-    console.log("Servers:")
+    console.log("Servers:");
     client.guilds.forEach((guild) => {
         console.log(" - " + guild.name);
         // List all channels
         guild.channels.forEach((channel) => {
             console.log(` -- ${channel.name} (${channel.type}) - ${channel.id}`);
         })
-    })
+    });
     // Sending message to channel
     var generalChannel = client.channels.get("625350794949951491"); // Replace with known channel ID
     generalChannel.send("Hello, world!"); 
 
-    // Set bot status to: "Playing with JavaScript"
     client.user.setActivity("with JavaScript");
-    // Alternatively, you can set the activity to any of the following:
-    // PLAYING, STREAMING, LISTENING, WATCHING
-    // For example:
-    // client.user.setActivity("TV", {type: "WATCHING"})
-
 
     ////////////////////////////////////////
     // Sending attachment
     // Provide a path to a local file
     // const localFileAttachment = new Discord.Attachment('E:\\02_Discord_bot\\img\\logo.png')
     // generalChannel.send(localFileAttachment)
-
     // Provide a URL to a file
     // const webAttachment = new Discord.Attachment('https://www.devdungeon.com/sites/all/themes/devdungeon2/logo.png')
     // generalChannel.send(webAttachment)
     ////////////////////////////////////////
-})
+});
 
-client.on('message', (receivedMessage) => {
-    // Prevent bot from responding to its own messages
-    if (receivedMessage.author == client.user) {
+client.once('reconnecting', () => {
+    console.log('Reconnecting!');
+   });
+
+client.once('disconnect', () => {
+    console.log('Disconnect!');
+});
+
+client.on('message', (receivedMessage) => {    
+    if (receivedMessage.author.bot) {
         return
     }
 
-    // Check if received message is a command
-    if (receivedMessage.content.startsWith("!")) { 
+    if (!receivedMessage.content.startsWith('!')) {
+        return;
+    }
+    else {
         processCommand(receivedMessage);
     }
-
-    // Check if received message is a question
-    // if (receivedMessage.content.endsWith("?")) { 
-    //     processQuestion(receivedMessage)
-    // }    
-})
+});
 
 processCommand = (receivedMessage) => {
     let fullCommand = receivedMessage.content.substr(1); // Remove the leading exclamation mark
@@ -79,7 +86,6 @@ processCommand = (receivedMessage) => {
     catch {
         receivedMessage.channel.send("I don't understand the command. Try `!help` or `!info`");
     };
-
 }
 
 function helpCommand (arguments, receivedMessage) {
@@ -147,7 +153,7 @@ function getCurrentWeather (arguments, receivedMessage) {
 
 httpGetAsync = (url, callback) => {
     let xmlHttp = new XMLHttpRequest(); 
-    xmlHttp.open("GET", url, true); // true for asynchronous
+    xmlHttp.open("GET", url, true);             // true for asynchronous
     xmlHttp.onload = function (e) {
         if (xmlHttp.readyState === 4) {
             if (xmlHttp.status === 200) {                                 
@@ -165,10 +171,3 @@ httpGetAsync = (url, callback) => {
 }
 
 
-
-// Get your bot's secret token from:
-// https://discordapp.com/developers/applications/
-// Click on your application -> Bot -> Token -> "Click to Reveal Token"
-bot_secret_token = "NjI1MzQ5OTY3NzMyNjcwNDY0.XYoMPQ.4thUTSHX7gpy3hzdJuwNrK-3LhA";
-
-client.login(bot_secret_token);
