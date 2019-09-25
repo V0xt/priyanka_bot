@@ -1,5 +1,6 @@
 # JS chat bot for Discord
 
+A simple discord bot which helps you manage your server by providing useful commands.
 
 ## Available commands:
   
@@ -10,5 +11,9 @@
 !8ball  
 !fortune  
 !bitcoin  
-!weather [cityName] (currently not working)  
+!weather [cityName] (currently not working) 
+!play [youtubeURL]
+!stop
+!skip
+
 
