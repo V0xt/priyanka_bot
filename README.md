@@ -5,12 +5,13 @@ A simple discord bot which helps you manage your server by providing useful comm
 ## Available commands:
   
 !help    
-!info  
+!info 
+!weather cityName 
 !ping  
 !8ball   
 !fortune  
 !bitcoin  
-!play [youtubeURL] plays music from youtube link
+!play youtubeURL plays music from youtube link
 !stop  
 !skip  
 !nowplaying  
