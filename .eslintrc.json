@@ -1,0 +1,26 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true
+    },
+    "extends": "eslint:recommended",
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "rules": {
+        // Indent with 4 spaces
+        "indent": ["error", "tab"]
+
+        // Indent JSX with 4 spaces
+        //"react/jsx-indent": ["error", 4],
+
+        // Indent props with 4 spaces
+        //"react/jsx-indent-props": ["error", 4]
+    }
+}
