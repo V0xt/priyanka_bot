@@ -13,7 +13,6 @@ module.exports = {
 			const command = require(`./${file}`);
 			str += `\`${command.usage}\` - ${command.description} \n`;
 		}
-		message.channel.send(str);
-		message.channel.send(`You can also try \`!info\` to get more about the bot.`);
+		message.channel.send(str + `You can also try \`!info\` to get more about the bot.`);
 	},
 };
