@@ -11,9 +11,9 @@ A simple discord bot which helps you manage your server by providing useful comm
 !8ball   
 !fortune  
 !bitcoin  
-!play youtubeURL plays music from youtube link
-!stop  
-!skip  
+!play youtubeURL    
+!stop      
+!skip     
 !nowplaying  
 !userinfo  
-!report [your message]  
+!report yourMessage   
