@@ -3,7 +3,7 @@ const fs = require('fs');
 const Client = require('./client/Client');
 const {
 	prefix,
-	token,
+	BOT_TOKEN,
 } = require('./config.json');
 
 const client = new Client();
@@ -65,4 +65,4 @@ client.on('message', async (message) => {
 	}
 });
 
-client.login(token);
+client.login(BOT_TOKEN);
