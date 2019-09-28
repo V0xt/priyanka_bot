@@ -5,8 +5,8 @@ A simple discord bot which helps you manage your server by providing useful comm
 ## Available commands:
   
 !help    
-!info 
-!weather cityName 
+!info    
+!weather cityName    
 !ping  
 !8ball   
 !fortune  
