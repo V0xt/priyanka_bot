@@ -7,10 +7,10 @@ module.exports = {
 	async execute (message) {
 		const args = message.content.split(' ');
 
-		if (!args[1] || !this.isUrl(args[1])) {
+		if (!args[1] || !this.isUrl(args[1]) || args[1].slice(0, 29) != 'https://www.youtube.com/watch') {
 			return message.channel.send(
 				'You must provide a correct link to the song! Example:\n`!play https://www.youtube.com/watch?v=dQw4w9WgXcQ`');
-		}		
+		}			
 		
 		const queue = message.client.queue;
 		const serverQueue = message.client.queue.get(message.guild.id);
