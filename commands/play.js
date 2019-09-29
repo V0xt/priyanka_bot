@@ -2,7 +2,7 @@ const ytdl = require('ytdl-core');
 
 module.exports = {
 	name: 'play',
-	usage: '!play youtube_url',
+	usage: 'Type !play <youtube_url>',
 	description: 'Play a song in your channel!',
 	async execute (message) {
 		const args = message.content.split(' ');
@@ -76,7 +76,7 @@ module.exports = {
 		}
 	
 		const dispatcher = serverQueue.connection.playStream(ytdl(song.url))
-			.on('end', () => {
+			.on('end', () => {				
 				console.log('Music ended!');
 				serverQueue.songs.shift();
 				this.play(message, serverQueue.songs[0]);
