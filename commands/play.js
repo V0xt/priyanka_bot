@@ -1,5 +1,4 @@
 const ytdl = require('ytdl-core');
-const { execute } = require('./nowplaying');
 
 module.exports = {
 	name: 'play',
@@ -7,6 +6,9 @@ module.exports = {
 	description: 'Play a song in your channel!',
 	async execute (message) {
 		const args = message.content.split(' ');
+
+		//console.log(message);
+		//console.log(message.member.user.username);
 
 		if (!args[1] || !this.isUrl(args[1]) || args[1].slice(0, 29) != 'https://www.youtube.com/watch') {
 			return message.channel.send(
@@ -55,8 +57,8 @@ module.exports = {
 				return message.channel.send(err);
 			}
 		} else {
-			serverQueue.songs.push(song);
-			return message.channel.send(`${song.title} has been added to the queue by ${message}!`);			
+			serverQueue.songs.push(song);			
+			return message.channel.send(`${song.title} has been added to the queue by <@${message.author.id}>!`);			
 		}
 	},
 	
@@ -86,6 +88,6 @@ module.exports = {
 				console.error(error);
 			});
 		dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
-		execute(message);
+		message.channel.send(`Now playing: ${serverQueue.songs[0].title} by <@${message.author.id}>`);
 	}
 };
