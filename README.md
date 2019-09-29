@@ -1,6 +1,6 @@
 # JS chat bot for Discord
 
-A simple discord bot which helps you manage your server by providing useful commands.
+
 
 ## Getting started
 
