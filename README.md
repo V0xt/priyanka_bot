@@ -16,4 +16,3 @@ A simple discord bot which helps you manage your server by providing useful comm
 !skip     
 !nowplaying  
 !userinfo  
-!report yourMessage   
