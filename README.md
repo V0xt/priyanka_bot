@@ -2,6 +2,10 @@
 
 A simple discord bot which helps you manage your server by providing useful commands.
 
+## Getting started
+
+To get started just clone project.
+
 ## Available commands:
   
 !help    
@@ -16,3 +20,6 @@ A simple discord bot which helps you manage your server by providing useful comm
 !skip     
 !nowplaying  
 !userinfo  
+
+## License
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details
