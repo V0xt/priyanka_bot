@@ -4,7 +4,7 @@ module.exports = {
 	name: 'bitcoin',
 	usage: '!bitcoin',
 	description: 'Looks up current BitCoin buy/sell price in USD.',
-	execute(message) {
+	async execute(message) {
 		let url = 'https://blockchain.info/ticker';
 		httpGetAsync(url, callback = (response) => {
 			let result = JSON.parse(response);
