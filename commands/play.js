@@ -1,4 +1,5 @@
 const ytdl = require('ytdl-core');
+const { execute } = require('./nowplaying');
 
 module.exports = {
 	name: 'play',
@@ -47,7 +48,7 @@ module.exports = {
 			try {
 				var connection = await voiceChannel.join();
 				queueContruct.connection = connection;
-				this.play(message, queueContruct.songs[0]);
+				this.play(message, queueContruct.songs[0]);				
 			} catch (err) {
 				console.log(err);
 				queue.delete(message.guild.id);
@@ -55,7 +56,7 @@ module.exports = {
 			}
 		} else {
 			serverQueue.songs.push(song);
-			return message.channel.send(`${song.title} has been added to the queue!`);
+			return message.channel.send(`${song.title} has been added to the queue by ${message}!`);			
 		}
 	},
 	
@@ -85,5 +86,6 @@ module.exports = {
 				console.error(error);
 			});
 		dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+		execute(message);
 	}
 };
