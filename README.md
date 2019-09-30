@@ -20,16 +20,16 @@ I learn to program and in parallel with studies, i'm writing this bot for myself
    
 !help    
 !info    
-!weather cityName    
+!weather `<cityName>`    
 !ping  
 !8ball   
 !fortune  
 !bitcoin  
-!play youtubeURL    
+!play `<youtubeURL>`   
 !stop      
 !skip     
 !nowplaying  
-!userinfo   
+!userinfo `<@discordUsername>`   
 !quiz  
    
 ## License
