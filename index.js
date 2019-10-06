@@ -28,7 +28,7 @@ client.once('ready', () => {
 		})
 	});
 	
-	var generalChannel = client.channels.get("625350794949951491"); // Replace with known channel ID
+	var generalChannel = client.channels.get("625350794949951491");
 	generalChannel.send("HeyGuys! :smiley_cat:  Type `!help` to get commands list."); 
 
 	client.user.setActivity("with JavaScript");
