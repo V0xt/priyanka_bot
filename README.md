@@ -1,4 +1,4 @@
-<p align="center"><img src="https://raw.githubusercontent.com/v0xt/priyanka_bot/master/img/icon_small.png"></p>  
+<p align="center"><img src="https://raw.githubusercontent.com/v0xt/priyanka_bot/master/src/img/icon_small.png"></p>  
 
 # Priyanka JavaScript bot for Discord
 
