@@ -1,4 +1,4 @@
-const quiz = require('../quiz.json');
+const quiz = require('../res/quiz.json');
 
 module.exports = {
 	name: 'quiz',
