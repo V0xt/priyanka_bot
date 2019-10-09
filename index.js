@@ -27,12 +27,13 @@ client.once('ready', () => {
 			console.log(` -- ${channel.name} (${channel.type}) - ${channel.id}`);
 		})
 	});
-	
+
+	console.log('Ready!');
+
 	var generalChannel = client.channels.get("625350794949951491");
 	generalChannel.send("HeyGuys! :smiley_cat:  Type `!help` to get commands list."); 
 
-	client.user.setActivity("with JavaScript");
-	console.log('Ready!');
+	client.user.setActivity("with JavaScript");	
 });
 
 client.once('reconnecting', () => {
@@ -44,8 +45,8 @@ client.once('disconnect', () => {
 });
 
 client.on('message', async (message) => {
-	const args = message.content.slice(1).split(/ +/);
-	const commandName = args.shift().toLowerCase();
+	const commandArgs = message.content.slice(1).split(/ +/);
+	const commandName = commandArgs.shift().toLowerCase();
 	const command = client.commands.get(commandName);
 
 	if (message.author.bot) {
@@ -56,7 +57,7 @@ client.on('message', async (message) => {
 	}
 
 	try {
-		command.execute(message, args);
+		command.execute(message, commandArgs);
 	} catch (error) {
 		console.error(error);
 		message.reply('There was an error trying to execute that command!');
