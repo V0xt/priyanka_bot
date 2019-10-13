@@ -56,6 +56,10 @@ client.on('message', async (message) => {
 		return;
 	}	
 
+	if (command.guildOnly && message.channel.type !== 'text') {
+		return message.reply('I can\'t execute that command inside DMs!');
+	}
+
 	if (!cooldowns.has(command.name)) {
 		cooldowns.set(command.name, new Discord.Collection());
 	}
@@ -69,7 +73,7 @@ client.on('message', async (message) => {
 
 		if (now < expirationTime) {
 			const timeLeft = (expirationTime - now) / 1000;
-			return message.reply(`Please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
+			return message.reply(`please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
 		}
 	}
 
