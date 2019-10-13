@@ -2,8 +2,12 @@ const ytdl = require('ytdl-core');
 
 module.exports = {
 	name: 'play',
-	usage: 'Type !play <youtube_url>',
 	description: 'Play a song in your channel!',
+	guildOnly: true,
+	// aliases: [],
+	usage: 'Type !play <youtube_url>',
+	cooldown: 10,	
+
 	async execute (message) {
 		const args = message.content.split(' ');
 

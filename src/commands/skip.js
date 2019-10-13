@@ -1,7 +1,11 @@
 module.exports = {
 	name: 'skip',
-	usage: '!skip',
 	description: 'Skip a song!',
+	guildOnly: true,
+	// aliases: [],
+	usage: '!skip',
+	cooldown: 5,	
+
 	execute(message) {
 		const serverQueue = message.client.queue.get(message.guild.id);
 		if (!message.member.voiceChannel) {
