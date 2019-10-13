@@ -2,8 +2,11 @@ const { httpGetAsync } = require('./web/httpRequest');
 
 module.exports = {
 	name: 'fortune',
-	usage: '!fortune',
 	description: 'Replies with a random fortune cookie quote.',
+	aliases: ['cookie'],
+	usage: '!fortune',
+	cooldown: 86400,
+	
 	execute (message) {
 		let fortunesLimit = 1;
 		let fortunesToSkip = Math.floor(Math.random() * (540 - 1 + 1)) + 1;

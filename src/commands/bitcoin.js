@@ -2,10 +2,11 @@ const { httpGetAsync } = require('./web/httpRequest');
 
 module.exports = {
 	name: 'bitcoin',
-	usage: '!bitcoin',
-	cooldown: 5,
-	aliases: ['bit', 'coin'],
 	description: 'Looks up current BitCoin buy/sell price in USD from blockchain.info.',
+	aliases: ['bit', 'coin'],
+	usage: '!bitcoin',
+	cooldown: 5,	
+
 	async execute(message) {
 		let url = 'https://blockchain.info/ticker';
 		httpGetAsync(url, callback = (response) => {
