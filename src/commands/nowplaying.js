@@ -1,7 +1,11 @@
 module.exports = {
 	name: 'nowplaying',
-	usage: '!nowplaying',
 	description: 'Get the song that is playing.',
+	guildOnly: true,
+	aliases: ['song'],
+	usage: '!nowplaying',
+	cooldown: 20,
+	
 	execute(message) {
 		const serverQueue = message.client.queue.get(message.guild.id);
 		if (!serverQueue) {
