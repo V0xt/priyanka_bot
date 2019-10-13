@@ -19,10 +19,10 @@ for (const file of commandFiles) {
 console.log(client.commands);
 
 client.once('ready', () => {
-	console.log("Connected as " + client.user.tag);
-	console.log("Servers:");
+	console.log('Connected as ' + client.user.tag);
+	console.log('Servers:');
 	client.guilds.forEach((guild) => {
-		console.log(" - " + guild.name);
+		console.log(' - ' + guild.name);
 		guild.channels.forEach((channel) => {
 			console.log(` -- ${channel.name} (${channel.type}) - ${channel.id}`);
 		})
@@ -30,8 +30,8 @@ client.once('ready', () => {
 
 	console.log('Ready!');
 
-	let generalChannel = client.channels.get("625350794949951491");
-	generalChannel.send("HeyGuys! :smiley_cat:  Type `!help` to get commands list."); 
+	let generalChannel = client.channels.get('625350794949951491');
+	generalChannel.send('HeyGuys! :smiley_cat:  Type `!help` to get commands list.'); 
 
 	client.user.setActivity("with JavaScript");	
 });
