@@ -28,14 +28,11 @@ module.exports = {
 			return message.channel.send('I need the permissions to join and speak in your voice channel!');
 		}
 		
-		console.log('args:', args[1]);
 		const songInfo = await ytdl.getInfo(args[1]);
 		const song = {
 			title: songInfo.title,
 			url: songInfo.video_url,
 		};
-
-		console.log("SONG:", song);
 
 		if (!serverQueue) {
 			const queueContruct = {
@@ -74,12 +71,9 @@ module.exports = {
 	play(message, song) {
 		const queue = message.client.queue;
 		const guild = message.guild;
-		const serverQueue = queue.get(message.guild.id);
-	
-		console.log('play song:', song);
+		const serverQueue = queue.get(message.guild.id);	
 
 		if (!song) {
-			console.log('!song');
 			serverQueue.voiceChannel.leave();
 			queue.delete(guild.id);
 			return;
