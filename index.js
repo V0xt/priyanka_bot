@@ -30,7 +30,7 @@ client.once('ready', () => {
 
 	console.log('Ready!');
 
-	var generalChannel = client.channels.get("625350794949951491");
+	let generalChannel = client.channels.get("625350794949951491");
 	generalChannel.send("HeyGuys! :smiley_cat:  Type `!help` to get commands list."); 
 
 	client.user.setActivity("with JavaScript");	
@@ -49,12 +49,9 @@ client.on('message', async (message) => {
 	const commandName = commandArgs.shift().toLowerCase();
 	const command = client.commands.get(commandName);
 
-	if (message.author.bot) {
+	if (message.author.bot || !message.content.startsWith(prefix)) {
 		return;
-	}
-	if (!message.content.startsWith(prefix)) {
-		return;
-	}
+	}	
 
 	try {
 		command.execute(message, commandArgs);
