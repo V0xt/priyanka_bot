@@ -48,7 +48,9 @@ client.once('disconnect', () => {
 client.on('message', async (message) => {
 	const commandArgs = message.content.slice(1).split(/ +/);
 	const commandName = commandArgs.shift().toLowerCase();
-	const command = client.commands.get(commandName);
+	const command = client.commands.get(commandName)
+		|| client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+	if (!command) return;
 
 	if (message.author.bot || !message.content.startsWith(prefix)) {
 		return;
@@ -67,7 +69,7 @@ client.on('message', async (message) => {
 
 		if (now < expirationTime) {
 			const timeLeft = (expirationTime - now) / 1000;
-			return message.reply(`please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
+			return message.reply(`Please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
 		}
 	}
 

@@ -4,6 +4,7 @@ module.exports = {
 	name: 'help',	
 	usage: '!help',
 	cooldown: 5,
+	aliases: [],
 	description: 'List all available commands.',
 	execute(message, args) {		
 		const data = [];
