@@ -3,6 +3,7 @@ const { prefix } = require('../../config.json');
 module.exports = {
 	name: 'help',	
 	description: 'List all available commands.',
+	guildOnly: false,
 	// aliases: [],
 	usage: '!help',
 	cooldown: 5,	

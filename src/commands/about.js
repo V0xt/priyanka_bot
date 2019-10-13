@@ -1,6 +1,7 @@
 module.exports = {
 	name: 'about',
 	description: 'Display info about this bot.',
+	guildOnly: false,
 	// aliases: [],
 	usage: '!about',
 	cooldown: 15,

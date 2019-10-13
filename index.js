@@ -46,15 +46,13 @@ client.once('disconnect', () => {
 });
 
 client.on('message', async (message) => {
+	if (!message.content.startsWith(prefix) || message.author.bot) return;
+	
 	const commandArgs = message.content.slice(1).split(/ +/);
 	const commandName = commandArgs.shift().toLowerCase();
 	const command = client.commands.get(commandName)
 		|| client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 	if (!command) return;
-
-	if (message.author.bot || !message.content.startsWith(prefix)) {
-		return;
-	}	
 
 	if (command.guildOnly && message.channel.type !== 'text') {
 		return message.reply('I can\'t execute that command inside DMs!');

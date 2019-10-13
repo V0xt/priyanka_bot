@@ -3,6 +3,7 @@ const { httpGetAsync } = require('./web/httpRequest');
 module.exports = {
 	name: 'bitcoin',
 	description: 'Looks up current BitCoin buy/sell price in USD from blockchain.info.',
+	guildOnly: false,
 	aliases: ['bit', 'coin'],
 	usage: '!bitcoin',
 	cooldown: 5,	

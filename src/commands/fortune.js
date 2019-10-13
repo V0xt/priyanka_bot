@@ -3,6 +3,7 @@ const { httpGetAsync } = require('./web/httpRequest');
 module.exports = {
 	name: 'fortune',
 	description: 'Replies with a random fortune cookie quote.',
+	guildOnly: false,
 	aliases: ['cookie'],
 	usage: '!fortune',
 	cooldown: 86400,

@@ -5,14 +5,11 @@ module.exports = {
 	description: 'Play a song in your channel!',
 	guildOnly: true,
 	// aliases: [],
-	usage: 'Type !play <youtube_url>',
-	cooldown: 10,	
+	usage: '!play <youtube_url>',
+	cooldown: 1,	
 
 	async execute (message) {
-		const args = message.content.split(' ');
-
-		//console.log(message);
-		//console.log(message.member.user.username);
+		const args = message.content.split(' ');		
 
 		if (!args[1] || !this.isUrl(args[1]) || args[1].slice(0, 29) != 'https://www.youtube.com/watch') {
 			return message.channel.send(
@@ -31,11 +28,14 @@ module.exports = {
 			return message.channel.send('I need the permissions to join and speak in your voice channel!');
 		}
 		
+		console.log('args:', args[1]);
 		const songInfo = await ytdl.getInfo(args[1]);
 		const song = {
 			title: songInfo.title,
 			url: songInfo.video_url,
 		};
+
+		console.log("SONG:", song);
 
 		if (!serverQueue) {
 			const queueContruct = {
@@ -52,7 +52,7 @@ module.exports = {
 			queueContruct.songs.push(song);
 
 			try {
-				var connection = await voiceChannel.join();
+				let connection = await voiceChannel.join();
 				queueContruct.connection = connection;
 				this.play(message, queueContruct.songs[0]);				
 			} catch (err) {
@@ -76,14 +76,17 @@ module.exports = {
 		const guild = message.guild;
 		const serverQueue = queue.get(message.guild.id);
 	
+		console.log('play song:', song);
+
 		if (!song) {
+			console.log('!song');
 			serverQueue.voiceChannel.leave();
 			queue.delete(guild.id);
 			return;
 		}
 	
 		const dispatcher = serverQueue.connection.playStream(ytdl(song.url))
-			.on('end', () => {				
+			.on('end', () => {							
 				console.log('Music ended!');
 				serverQueue.songs.shift();
 				this.play(message, serverQueue.songs[0]);
