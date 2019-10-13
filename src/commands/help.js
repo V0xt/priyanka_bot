@@ -3,6 +3,7 @@ const { prefix } = require('../../config.json');
 module.exports = {
 	name: 'help',	
 	usage: '!help',
+	cooldown: 5,
 	description: 'List all available commands.',
 	execute(message, args) {		
 		const data = [];
