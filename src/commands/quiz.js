@@ -2,8 +2,12 @@ const quiz = require('../res/quiz.json');
 
 module.exports = {
 	name: 'quiz',
-	usage: '!quiz',
 	description: 'Description.',
+	guildOnly: false,
+	// aliases: [],
+	usage: '!quiz',	
+	cooldown: 10,	
+	
 	execute(message) {
 		let item = quiz[Math.floor(Math.random() * quiz.length)];
 		let filter = response => {
