@@ -47,8 +47,8 @@ client.once('disconnect', () => {
 client.on('message', async (message) => {
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
 	
-	const commandArgs = message.content.slice(1).split(/ +/);
-	const commandName = commandArgs.shift().toLowerCase();
+	const args = message.content.slice(prefix.length).split(' ');
+	const commandName = args.shift().toLowerCase();
 	const command = client.commands.get(commandName)
 		|| client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 	if (!command) return;
@@ -78,7 +78,7 @@ client.on('message', async (message) => {
 	setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
 	try {
-		command.execute(message, commandArgs);
+		command.execute(message, args);
 	} catch (error) {
 		console.error(error);
 		message.reply('There was an error trying to execute that command!');

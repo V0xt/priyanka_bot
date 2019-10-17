@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 
 module.exports = {
 	name: 'cat',
-	description: 'Returns random cat picture from the aws.random.cat',
+	description: 'Returns random cat picture from aws.random.cat',
 	guildOnly: false,
 	//aliases: [],
 	usage: '!cat',

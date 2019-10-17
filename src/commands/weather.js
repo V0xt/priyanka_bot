@@ -10,7 +10,7 @@ module.exports = {
 
 	async execute (message, args) {		
 		if (!args.length) {
-			message.channel.send('Please, provide city name! Example:\n`!weather Moscow`');
+			return message.channel.send('Please, provide city name! Example:\n`!weather Moscow`');
 		}
 		
 		const result  = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${args}&APPID=49bd59f012549862afe17a39f972effb`).then(response => response.json());
