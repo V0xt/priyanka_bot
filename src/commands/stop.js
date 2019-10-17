@@ -1,7 +1,11 @@
 module.exports = {
 	name: 'stop',
-	usage: '!stop',
 	description: 'Stop all songs in the queue!',
+	guildOnly: true,
+	// aliases: [],
+	usage: '!stop',
+	cooldown: 5,
+	
 	execute(message) {
 		const serverQueue = message.client.queue.get(message.guild.id);
 		if (!message.member.voiceChannel) {

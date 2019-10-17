@@ -1,10 +1,12 @@
 module.exports = {
 	name: 'userinfo',
+	description: 'Display info about yourself.',
+	guildOnly: false,
+	aliases: ['user-info', 'info'],
 	usage: '!userinfo',
-	description: 'Get information about a user.',
+	cooldown: 5,	
+	
 	execute(message) {
-		const member = message.mentions.members.first();
-		const user = member.user;
-		message.channel.send(`Name: ${user.username}, ID: ${user.id}`);
+		message.channel.send(`Your username: ${message.author.username}\nYour ID: ${message.author.id}`);
 	},
 };
