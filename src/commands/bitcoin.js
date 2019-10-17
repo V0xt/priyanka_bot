@@ -1,4 +1,4 @@
-const { httpGetAsync } = require('./web/httpRequest');
+const fetch = require('node-fetch');
 
 module.exports = {
 	name: 'bitcoin',
@@ -9,10 +9,7 @@ module.exports = {
 	cooldown: 5,	
 
 	async execute(message) {
-		let url = 'https://blockchain.info/ticker';
-		httpGetAsync(url, callback = (response) => {
-			let result = JSON.parse(response);       
-			message.channel.send(`BUY: ${result.USD.buy}${result.USD.symbol}\nSELL: ${result.USD.sell}${result.USD.symbol}`);
-		});
+		const result  = await fetch('https://blockchain.info/ticker').then(response => response.json());
+		message.channel.send(`BUY: ${result.USD.buy}${result.USD.symbol}\nSELL: ${result.USD.sell}${result.USD.symbol}`);
 	},
 };

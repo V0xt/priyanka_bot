@@ -1,4 +1,4 @@
-const { httpGetAsync } = require('./web/httpRequest');
+const fetch = require('node-fetch');
 
 module.exports = {
 	name: 'fortune',
@@ -8,15 +8,10 @@ module.exports = {
 	usage: '!fortune',
 	cooldown: 86400,
 	
-	execute (message) {
+	async execute (message) {
 		let fortunesLimit = 1;
 		let fortunesToSkip = Math.floor(Math.random() * (540 - 1 + 1)) + 1;
-		console.log(fortunesToSkip);
-		let url = `http://fortunecookieapi.herokuapp.com/v1/fortunes?limit=${fortunesLimit}&skip=${fortunesToSkip}`;
-
-		httpGetAsync(url, callback = (response) => {        
-			let result = JSON.parse(response);   
-			message.channel.send(result[0].message); 
-		});
+		const result  = await fetch(`http://fortunecookieapi.herokuapp.com/v1/fortunes?limit=${fortunesLimit}&skip=${fortunesToSkip}`).then(response => response.json());
+		message.channel.send(result[0].message);
 	},
 };
