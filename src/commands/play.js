@@ -6,12 +6,10 @@ module.exports = {
 	guildOnly: true,
 	// aliases: [],
 	usage: '!play <youtube_url>',
-	cooldown: 1,	
+	cooldown: 5,	
 
-	async execute (message) {
-		const args = message.content.split(' ');		
-
-		if (!args[1] || !this.isUrl(args[1]) || args[1].slice(0, 29) != 'https://www.youtube.com/watch') {
+	async execute (message, args) {
+		if (!args.length || !this.isUrl(args[0]) || args[0].slice(0, 29) != 'https://www.youtube.com/watch') {
 			return message.channel.send(
 				'You must provide a correct link to the song! Example:\n`!play https://www.youtube.com/watch?v=dQw4w9WgXcQ`');
 		}			
@@ -28,7 +26,7 @@ module.exports = {
 			return message.channel.send('I need the permissions to join and speak in your voice channel!');
 		}
 		
-		const songInfo = await ytdl.getInfo(args[1]);
+		const songInfo = await ytdl.getInfo(args[0]);
 		const song = {
 			title: songInfo.title,
 			url: songInfo.video_url,
