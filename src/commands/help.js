@@ -5,7 +5,7 @@ module.exports = {
 	description: 'List all available commands.',
 	guildOnly: false,
 	// aliases: [],
-	usage: '!help',
+	usage: `\`!help\` or \`!help [command name]\``,
 	cooldown: 5,	
 
 	execute(message, args) {		

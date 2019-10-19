@@ -5,7 +5,7 @@ module.exports = {
 	description: 'Play a song in your channel!',
 	guildOnly: true,
 	// aliases: [],
-	usage: '!play <youtube_url>',
+	usage: `\`!play [youtube_url]\``,
 	cooldown: 5,	
 
 	async execute (message, args) {
