@@ -4,7 +4,7 @@ module.exports = {
 	guildOnly: true,
 	// aliases: [],
 	usage: '!skip',
-	cooldown: 5,	
+	cooldown: 15,	
 
 	execute(message) {
 		const serverQueue = message.client.queue.get(message.guild.id);
