@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const { ethApi } = require('../../config.json');
+const ethApi = process.env.ethApi;
 
 module.exports = {
 	name: 'eth',

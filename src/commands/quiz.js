@@ -5,12 +5,12 @@ module.exports = {
 	description: 'Description.',
 	guildOnly: false,
 	// aliases: [],
-	usage: '!quiz',	
-	cooldown: 10,	
-	
+	usage: '!quiz',
+	cooldown: 10,
+
 	execute(message) {
-		let item = quiz[Math.floor(Math.random() * quiz.length)];
-		let filter = response => {
+		const item = quiz[Math.floor(Math.random() * quiz.length)];
+		const filter = response => {
 			return item.answers.some(answer => answer.toLowerCase() === response.content.toLowerCase());
 		};
 		message.channel.send(item.question).then(() => {
@@ -22,5 +22,5 @@ module.exports = {
 					message.channel.send('Looks like nobody got the answer this time.');
 				});
 		});
-	}
-}
+	},
+};

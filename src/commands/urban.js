@@ -11,7 +11,7 @@ module.exports = {
 	// aliases: [],
 	usage: '!urban',
 	cooldown: 10,
-	
+
 	async execute(message, args) {
 		if (!args.length) {
 			return message.channel.send('You need to supply a search term!');

@@ -7,11 +7,11 @@ module.exports = {
 	aliases: ['cookie'],
 	usage: '!fortune',
 	cooldown: 86400,
-	
-	async execute (message) {
-		let fortunesLimit = 1;
-		let fortunesToSkip = Math.floor(Math.random() * (540 - 1 + 1)) + 1;
-		const result  = await fetch(`http://fortunecookieapi.herokuapp.com/v1/fortunes?limit=${fortunesLimit}&skip=${fortunesToSkip}`).then(response => response.json());
+
+	async execute(message) {
+		const fortunesLimit = 1;
+		const fortunesToSkip = Math.floor(Math.random() * (540 - 1 + 1)) + 1;
+		const result = await fetch(`http://fortunecookieapi.herokuapp.com/v1/fortunes?limit=${fortunesLimit}&skip=${fortunesToSkip}`).then(response => response.json());
 		message.channel.send(result[0].message);
 	},
 };

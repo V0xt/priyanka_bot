@@ -5,7 +5,7 @@ module.exports = {
 	aliases: ['song'],
 	usage: '!nowplaying',
 	cooldown: 20,
-	
+
 	execute(message) {
 		const serverQueue = message.client.queue.get(message.guild.id);
 		if (!serverQueue) {

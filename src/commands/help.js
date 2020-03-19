@@ -1,14 +1,14 @@
-const { prefix } = require('../../config.json');
+const prefix = process.env.prefix;
 
 module.exports = {
-	name: 'help',	
+	name: 'help',
 	description: 'List all available commands.',
 	guildOnly: false,
 	// aliases: [],
-	usage: `\`!help\` or \`!help [command name]\``,
-	cooldown: 5,	
+	usage: '`!help` or `!help [command name]`',
+	cooldown: 5,
 
-	execute(message, args) {		
+	execute(message, args) {
 		const data = [];
 		const { commands } = message.client;
 

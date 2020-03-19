@@ -5,7 +5,7 @@ module.exports = {
 	// aliases: [],
 	usage: '!ping',
 	cooldown: 20,
-	
+
 	execute(message) {
 		message.channel.send('Pong!');
 	},

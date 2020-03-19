@@ -4,13 +4,13 @@ module.exports = {
 	name: 'cat',
 	description: 'Returns random cat picture from aws.random.cat',
 	guildOnly: false,
-	//aliases: [],
+	// aliases: [],
 	usage: '!cat',
-	cooldown: 6,	
+	cooldown: 6,
 
 	async execute(message) {
-		const { file }  = await fetch('https://aws.random.cat/meow').then(response => response.json());
-		message.channel.send(file);		
+		const { file } = await fetch('https://aws.random.cat/meow').then(response => response.json());
+		message.channel.send(file);
 	},
 };
 

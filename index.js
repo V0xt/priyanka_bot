@@ -1,10 +1,10 @@
+require('dotenv').config();
+
 const Discord = require('discord.js');
 const fs = require('fs');
 const Client = require('./client/Client');
-const {
-	prefix,
-	BOT_TOKEN,
-} = require('./config.json');
+const prefix = process.env.prefix;
+const BOT_TOKEN = process.env.BOT_TOKEN;
 
 const client = new Client();
 client.commands = new Discord.Collection();
@@ -25,15 +25,15 @@ client.once('ready', () => {
 		console.log(' - ' + guild.name);
 		guild.channels.forEach((channel) => {
 			console.log(` -- ${channel.name} (${channel.type}) - ${channel.id}`);
-		})
+		});
 	});
 
 	console.log('Ready!');
 
-	let generalChannel = client.channels.get('625350794949951491');
-	generalChannel.send('HeyGuys! :smiley_cat:  Type `!help` to get commands list.'); 
+	const generalChannel = client.channels.get('625350794949951491');
+	generalChannel.send('HeyGuys! :smiley_cat:  Type `!help` to get commands list.');
 
-	client.user.setActivity("with JavaScript");	
+	client.user.setActivity('with JavaScript');
 });
 
 client.once('reconnecting', () => {
@@ -46,7 +46,7 @@ client.once('disconnect', () => {
 
 client.on('message', async (message) => {
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
-	
+
 	const args = message.content.slice(prefix.length).split(/ +/);
 	const commandName = args.shift().toLowerCase();
 	const command = client.commands.get(commandName)
@@ -60,11 +60,11 @@ client.on('message', async (message) => {
 	if (!cooldowns.has(command.name)) {
 		cooldowns.set(command.name, new Discord.Collection());
 	}
-	
+
 	const now = Date.now();
 	const timestamps = cooldowns.get(command.name);
 	const cooldownAmount = (command.cooldown || 3) * 1000;
-	
+
 	if (timestamps.has(message.author.id)) {
 		const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
 
@@ -79,7 +79,8 @@ client.on('message', async (message) => {
 
 	try {
 		command.execute(message, args);
-	} catch (error) {
+	}
+	catch (error) {
 		console.error(error);
 		message.reply('There was an error trying to execute that command!');
 	}
