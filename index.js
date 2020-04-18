@@ -18,8 +18,9 @@ for (const file of commandFiles) {
 
 const cooldowns = new Discord.Collection();
 
-client.once('ready', () => {
+const logConnectionInfo = () => {
 	console.log('Connected as ' + client.user.tag);
+
 	console.log('Servers:');
 	client.guilds.forEach((guild) => {
 		console.log(' - ' + guild.name);
@@ -29,11 +30,18 @@ client.once('ready', () => {
 	});
 
 	console.log('Ready!');
+};
 
-	const generalChannel = client.channels.get('625350794949951491');
-	generalChannel.send('HeyGuys! :smiley_cat:  Type `!help` to get commands list.');
+client.once('ready', () => {
+	logConnectionInfo();
 
-	client.user.setActivity('with JavaScript');
+	client.user.setPresence({
+		game: {
+			name: 'with JavaScript',
+			type: 'PLAYING',
+		},
+		status: 'online',
+	});
 });
 
 client.once('reconnecting', () => {
@@ -44,18 +52,25 @@ client.once('disconnect', () => {
 	console.log('Disconnect!');
 });
 
-client.on('message', async (message) => {
-	if (!message.content.startsWith(prefix) || message.author.bot) return;
+const isCommand = (message, args) => {
+	if (!message.content.startsWith(prefix) || message.author.bot) {
+		return;
+	}
 
-	const args = message.content.slice(prefix.length).split(/ +/);
 	const commandName = args.shift().toLowerCase();
-	const command = client.commands.get(commandName)
-		|| client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+	return client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+};
+
+const isGuildOnly = (command, message) => {
+	return command.guildOnly && message.channel.type !== 'text';
+};
+
+client.on('message', async (message) => {
+	const args = message.content.slice(prefix.length).split(/ +/);
+	const command = isCommand(message, args);
 	if (!command) return;
 
-	if (command.guildOnly && message.channel.type !== 'text') {
-		return message.reply('I can\'t execute that command inside DMs!');
-	}
+	if (isGuildOnly(command, message)) return message.reply('I can\'t execute that command inside DMs!');
 
 	if (!cooldowns.has(command.name)) {
 		cooldowns.set(command.name, new Discord.Collection());
@@ -67,10 +82,9 @@ client.on('message', async (message) => {
 
 	if (timestamps.has(message.author.id)) {
 		const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
-
 		if (now < expirationTime) {
 			const timeLeft = (expirationTime - now) / 1000;
-			return message.reply(`please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
+			return message.reply(`Please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
 		}
 	}
 
@@ -82,7 +96,7 @@ client.on('message', async (message) => {
 	}
 	catch (error) {
 		console.error(error);
-		message.reply('There was an error trying to execute that command!');
+		message.reply('There was an error trying to execute that command.');
 	}
 });
 
