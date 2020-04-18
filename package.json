@@ -1,10 +1,10 @@
 {
   "name": "02_discord_bot",
   "version": "1.0.0",
-  "description": "A simple chat bot for discord app",
+  "description": "Discord chat bot",
   "main": "index.js",
   "dependencies": {
-    "discord.js": "^11.6.2",
+    "discord.js": "^11.6.4",
     "dotenv": "^8.2.0",
     "ffmpeg": "0.0.4",
     "ffmpeg-binaries": "^4.0.0",
@@ -15,8 +15,8 @@
   "devDependencies": {
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
-    "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-import": "^2.20.1",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
@@ -30,8 +30,8 @@
     "type": "git",
     "url": "git+https://github.com/V0xt/priyanka_bot.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Aleksandr",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/V0xt/priyanka_bot/issues"
   },
