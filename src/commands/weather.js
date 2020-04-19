@@ -1,4 +1,5 @@
 const fetch = require('node-fetch');
+const weatherApi = process.env.openWeatherApi;
 
 module.exports = {
 	name: 'weather',
@@ -13,7 +14,7 @@ module.exports = {
 			return message.channel.send('Please, provide city name! Example:\n`!weather Moscow`');
 		}
 
-		const result = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${args}&APPID=49bd59f012549862afe17a39f972effb`).then(response => response.json());
+		const result = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${args}&APPID=${weatherApi}`).then(response => response.json());
 		message.channel.send(`${result.name}, ${result.sys.country}, ${result.weather[0].description}\nTemp: ${Math.floor(result.main.temp - 273.15)} °C\nWind speed: ${result.wind.speed} m/s`);
 	},
 };
