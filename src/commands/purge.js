@@ -1,9 +1,9 @@
 module.exports = {
-	name: 'prune',
-	description: 'Prune up to 99 messages.',
+	name: 'purge',
+	description: 'Removes all messages from all users in the channel, up to 100.',
 	guildOnly: false,
 	// aliases: [],
-	usage: '!prune',
+	usage: '!purge [number of msg to delete]',
 	cooldown: 5,
 
 	execute(message, args) {
@@ -18,7 +18,7 @@ module.exports = {
 
 		message.channel.bulkDelete(amount, true).catch(err => {
 			console.error(err);
-			message.channel.send('there was an error trying to prune messages in this channel!');
+			message.channel.send('there was an error trying to delete messages in this channel!');
 		});
 	},
 };
