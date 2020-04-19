@@ -1,7 +1,6 @@
 require('dotenv').config();
 
 const Discord = require('discord.js');
-const fs = require('fs');
 const Client = require('./client/Client');
 const prefix = process.env.prefix;
 const BOT_TOKEN = process.env.BOT_TOKEN;
@@ -9,7 +8,9 @@ const BOT_TOKEN = process.env.BOT_TOKEN;
 const client = new Client();
 client.commands = new Discord.Collection();
 
-const commandFiles = fs.readdirSync('./src/commands').filter((file) => file.endsWith('.js'));
+const recursiveDirReader = require('./src/utils/recursiveSearch.js');
+const commandFiles = recursiveDirReader('./src/commands')
+	.filter((file) => file.endsWith('.js'));
 
 for (const file of commandFiles) {
 	const command = require(`./src/commands/${file}`);
