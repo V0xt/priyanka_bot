@@ -11,7 +11,7 @@ module.exports = {
 	async execute(message) {
 		const result = await fetch('https://api.imgflip.com/get_memes').then(response => response.json());
 
-		const rnd = Math.floor(Math.random() * Math.floor(100));
+		const rnd = Math.floor(Math.random() * 100) + 1;
 		message.channel.send(`${result.data.memes[rnd].url}`);
 	},
 };
