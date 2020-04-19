@@ -4,7 +4,7 @@ module.exports = {
 	name: 'bitcoin',
 	description: 'Looks up current BitCoin buy/sell price in USD from blockchain.info.',
 	guildOnly: false,
-	aliases: ['bit', 'coin'],
+	aliases: ['bit', 'coin', 'btc'],
 	usage: '!bitcoin',
 	cooldown: 5,
 
