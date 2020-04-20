@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 
 module.exports = {
 	name: 'meme',
-	description: 'Returns random popular meme from imgflip.com',
+	description: 'Returns random meme template from imgflip.com',
 	guildOnly: false,
 	// aliases: [ ],
 	usage: '!meme',
