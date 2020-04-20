@@ -7,13 +7,13 @@ Try !help to get a full list of available commands.
 
 ## Getting started  
   
-1. Download project;
-2. Install dependencies `npm install`;
+1. Download project
+2. Install dependencies `npm install`
 3. Create .env file with the following contents: <br>
 	prefix = <desired_command_prefix> <br>
 	BOT_TOKEN = <discord_bot_token>
 
-4. Run the bot with `npm start` or `node index.js`;
+4. Run the bot with `npm start` or `node index.js`
 5. Invite bot to your server and type `!help` in chat to get list of commands.
      
 ## Setting up APIs:

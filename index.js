@@ -3,7 +3,6 @@ require('dotenv').config();
 const Discord = require('discord.js');
 const Client = require('./client/Client');
 const prefix = process.env.prefix;
-const BOT_TOKEN = process.env.BOT_TOKEN;
 
 const client = new Client();
 client.commands = new Discord.Collection();
@@ -21,6 +20,7 @@ const cooldowns = new Discord.Collection();
 
 const logConnectionInfo = () => {
 	console.log('Connected as ' + client.user.tag);
+	console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`);
 
 	console.log('Servers:');
 	client.guilds.forEach((guild) => {
@@ -35,26 +35,27 @@ const logConnectionInfo = () => {
 
 client.once('ready', () => {
 	logConnectionInfo();
-
-	client.user.setPresence({
-		game: {
-			name: 'with JavaScript',
-			type: 'PLAYING',
-		},
-		status: 'online',
-	});
+	client.user.setActivity(`& serving ${client.guilds.size} servers`);
 });
 
-client.once('reconnecting', () => {
-	console.log('Reconnecting!');
+client.once('reconnecting', () => console.log('Reconnecting!'));
+
+client.once('disconnect', () => console.log('Disconnect!'));
+
+client.on('error', console.error);
+
+client.on('guildCreate', guild => {
+	console.log(`New guild joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`);
+	client.user.setActivity(`Serving ${client.guilds.size} servers`);
 });
 
-client.once('disconnect', () => {
-	console.log('Disconnect!');
+client.on('guildDelete', guild => {
+	console.log(`I have been removed from: ${guild.name} (id: ${guild.id})`);
+	client.user.setActivity(`Serving ${client.guilds.size} servers`);
 });
 
 const isCommand = (message, args) => {
-	if (!message.content.startsWith(prefix) || message.author.bot) {
+	if (!message.content.startsWith(prefix)) {
 		return;
 	}
 
@@ -67,6 +68,8 @@ const isGuildOnly = (command, message) => {
 };
 
 client.on('message', async (message) => {
+	if(message.author.bot) return;
+
 	const args = message.content.slice(prefix.length).split(/ +/);
 	const command = isCommand(message, args);
 	if (!command) return;
@@ -101,4 +104,4 @@ client.on('message', async (message) => {
 	}
 });
 
-client.login(BOT_TOKEN);
+client.login(process.env.BOT_TOKEN);
