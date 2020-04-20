@@ -1,12 +1,13 @@
 module.exports = {
 	name: 'server',
-	description: 'Displays server name and amount of members.',
+	description: 'Displays server info (id, name, region, members count).',
 	guildOnly: true,
 	// aliases: [],
 	usage: '!server',
 	cooldown: 10,
 
 	execute(message) {
-		message.channel.send(`Server name: ${message.guild.name}\nTotal members: ${message.guild.memberCount}`);
+		console.log(message.guild);
+		message.channel.send(`Server id: \`${message.guild.id}\`\nServer name: \`${message.guild.name}\`\nServer region: \`${message.guild.region}\`\nTotal members: \`${message.guild.memberCount}\``);
 	},
 };

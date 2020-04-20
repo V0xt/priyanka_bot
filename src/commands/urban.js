@@ -27,7 +27,7 @@ module.exports = {
 
 		const [answer] = list;
 
-		const embed = new Discord.RichEmbed()
+		const embed = new Discord.MessageEmbed()
 			.setColor('#EFFF00')
 			.setTitle(answer.word)
 			.setURL(answer.permalink)

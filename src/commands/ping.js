@@ -8,6 +8,6 @@ module.exports = {
 
 	async execute(message) {
 		const msg = await message.channel.send('Ping?');
-		msg.edit(`Pong! Latency is ${msg.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(message.client.ping)}ms`);
+		msg.edit(`Pong! Latency is ${msg.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(message.client.ws.ping)}ms`);
 	},
 };

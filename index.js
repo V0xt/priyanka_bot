@@ -20,12 +20,12 @@ const cooldowns = new Discord.Collection();
 
 const logConnectionInfo = () => {
 	console.log('Connected as ' + client.user.tag);
-	console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`);
+	console.log(`Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`);
 
 	console.log('Servers:');
-	client.guilds.forEach((guild) => {
+	client.guilds.cache.map((guild) => {
 		console.log(' - ' + guild.name);
-		guild.channels.forEach((channel) => {
+		guild.channels.cache.map((channel) => {
 			console.log(` -- ${channel.name} (${channel.type}) - ${channel.id}`);
 		});
 	});
@@ -35,7 +35,7 @@ const logConnectionInfo = () => {
 
 client.once('ready', () => {
 	logConnectionInfo();
-	client.user.setActivity(`& serving ${client.guilds.size} servers`);
+	client.user.setActivity(`& serving ${client.guilds.cache.size} servers`);
 });
 
 client.once('reconnecting', () => console.log('Reconnecting!'));
@@ -74,7 +74,7 @@ client.on('message', async (message) => {
 	const command = isCommand(message, args);
 	if (!command) return;
 
-	if (isGuildOnly(command, message)) return message.reply('I can\'t execute that command inside DMs!');
+	if (isGuildOnly(command, message)) return message.reply('I can\'t execute that command inside DMs.');
 
 	if (!cooldowns.has(command.name)) {
 		cooldowns.set(command.name, new Discord.Collection());
