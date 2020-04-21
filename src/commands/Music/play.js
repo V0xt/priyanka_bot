@@ -32,6 +32,7 @@ module.exports = {
 		const song = {
 			title: songInfo.title,
 			url: songInfo.video_url,
+			duration: (songInfo.length_seconds / 60).toFixed(2),
 		};
 
 		if (!serverQueue) {
@@ -90,10 +91,9 @@ module.exports = {
 				// message.channel.send(`Now playing: ${serverQueue.songs[0].title} by <@${message.author.id}>`);
 				console.log(serverQueue.songs[0]);
 				const videoEmbed = new MessageEmbed()
-					// .setThumbnail(serverQueue.songs[0].thumbnail)
 					.setColor('#e9f931')
-					.addField('Now Playing:', serverQueue.songs[0].title);
-					// .addField('Duration:', serverQueue.songs[0].duration);
+					.addField('Now Playing:', serverQueue.songs[0].title)
+					.addField('Duration:', serverQueue.songs[0].duration);
 				if (serverQueue.songs[1]) videoEmbed.addField('Next Song:', serverQueue.songs[1].title);
 				message.channel.send(videoEmbed);
 			})
