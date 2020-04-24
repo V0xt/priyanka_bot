@@ -3,7 +3,7 @@ module.exports = {
 	description: 'Get the avatar URL of the tagged user(s), or your own avatar.',
 	guildOnly: false,
 	aliases: ['icon', 'pfp'],
-	usage: '!avatar [@username1 [, @username2 [, ...]]]',
+	usage: '!avatar @username1[,@username2,...]',
 	cooldown: 5,
 
 	execute(message) {
