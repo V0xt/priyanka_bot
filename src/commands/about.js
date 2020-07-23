@@ -7,6 +7,6 @@ module.exports = {
 	cooldown: 15,
 
 	execute(message) {
-		message.channel.send('Follow the link to get more info about the bot https://github.com/V0xt/priyanka_bot');
+		message.channel.send('Follow the link to get more info about the bot https://github.com/v0xat/priyanka_bot/');
 	},
 };

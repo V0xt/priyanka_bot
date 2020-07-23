@@ -4,37 +4,38 @@
   "description": "Discord chat bot",
   "main": "index.js",
   "dependencies": {
-    "@discordjs/opus": "^0.1.0",
+    "@discordjs/opus": "^0.3.2",
     "discord.js": "^12.2.0",
     "dotenv": "^8.2.0",
-    "ffmpeg": "0.0.4",
-    "ffmpeg-binaries": "^4.0.0",
     "node-fetch": "^2.6.0",
     "opusscript": "0.0.7",
-    "ytdl-core": "^2.1.0"
+    "ytdl-core": "^3.1.2"
   },
   "devDependencies": {
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb-base": "^14.1.0",
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
+    "babel-jest": "^26.1.0",
+    "eslint": "^7.5.0",
+    "eslint-config-airbnb-base": "^14.2.0",
     "eslint-config-standard": "^14.1.1",
-    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "jest": "^25.4.0"
+    "jest": "^26.1.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "node index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/V0xt/priyanka_bot.git"
+    "url": "git+https://github.com/v0xat/priyanka_bot.git"
   },
-  "author": "Aleksandr Sologubov",
+  "author": "Alexander Sologubov",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/V0xt/priyanka_bot/issues"
+    "url": "https://github.com/v0xat/priyanka_bot/issues"
   },
-  "homepage": "https://github.com/V0xt/priyanka_bot#readme"
+  "homepage": "https://github.com/v0xat/priyanka_bot#readme"
 }
