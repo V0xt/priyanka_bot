@@ -1,12 +1,23 @@
-module.exports = {
-	name: 'purge',
-	description: 'Removes all messages from all users in the channel, up to 100.',
-	guildOnly: true,
-	// aliases: [],
-	usage: '!purge [number of msg to delete]',
-	cooldown: 5,
+const { Command } = require('discord.js-commando');
 
-	execute(message, args) {
+module.exports = class About extends Command {
+	constructor(client) {
+		super(client, {
+			name: 'purge',
+			description: 'Removes all messages from all users in the channel, up to 100.',
+			group: 'admin',
+			memberName: 'purge',
+			guildOnly: true,
+			// aliases: [],
+			usage: '!purge [number of msg to delete]',
+			throttling: {
+				usages: 2,
+				duration: 10,
+			},
+		});
+	}
+
+	run(message, args) {
 		const amount = parseInt(args[0]) + 1;
 
 		if (isNaN(amount)) {
@@ -20,5 +31,5 @@ module.exports = {
 			console.error(err);
 			message.channel.send('there was an error trying to delete messages in this channel!');
 		});
-	},
+	}
 };

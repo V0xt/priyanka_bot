@@ -1,12 +1,25 @@
 require('dotenv').config();
-
-const Discord = require('discord.js');
-const Client = require('./client/Client');
+const { CommandoClient } = require('discord.js-commando');
+const path = require('path');
 const fs = require('fs');
-const recursiveDirReader = require('./src/utils/recursiveSearch.js');
 
-const client = new Client();
-client.commands = new Discord.Collection();
+const client = new CommandoClient({
+	commandPrefix: '!',
+	owner: '244140780967559169',
+});
+
+client.registry
+	.registerDefaultTypes()
+	.registerGroups([
+		['admin', 'Admin Command Group'],
+		['crypto', 'Crypto Command Group'],
+		['music', 'Music Command Group'],
+		['utils', 'Utility Command Group'],
+		// ['wolfram', 'Wolfram Command Group'],
+	])
+	.registerDefaultGroups()
+	.registerDefaultCommands()
+	.registerCommandsIn(path.join(__dirname, 'src/commands'));
 
 fs.readdir('./src/events/', (err, files) => {
 	if (err) return console.error(err);
@@ -16,12 +29,5 @@ fs.readdir('./src/events/', (err, files) => {
 		client.on(eventName, event.bind(null, client));
 	});
 });
-
-recursiveDirReader('./src/commands')
-	.filter((file) => file.endsWith('.js'))
-	.forEach(file => {
-		const command = require(`./src/commands/${file}`);
-		client.commands.set(command.name, command);
-	});
 
 client.login(process.env.BOT_TOKEN);

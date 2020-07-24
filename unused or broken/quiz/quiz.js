@@ -1,14 +1,24 @@
-const quiz = require('../res/quiz.json');
+const { Command } = require('discord.js-commando');
+const quiz = require('../../res/quiz.json');
 
-module.exports = {
-	name: 'quiz',
-	description: 'Description.',
-	guildOnly: false,
-	// aliases: [],
-	usage: '!quiz',
-	cooldown: 10,
+module.exports = class About extends Command {
+	constructor(client) {
+		super(client, {
+			name: 'quiz',
+			description: 'Description.',
+			group: 'utils',
+			memberName: 'quiz',
+			guildOnly: false,
+			// aliases: [],
+			usage: '!quiz',
+			throttling: {
+				usages: 2,
+				duration: 10,
+			},
+		});
+	}
 
-	execute(message) {
+	run(message) {
 		const item = quiz[Math.floor(Math.random() * quiz.length)];
 		const filter = response => {
 			return item.answers.some(answer => answer.toLowerCase() === response.content.toLowerCase());
@@ -22,5 +32,5 @@ module.exports = {
 					message.channel.send('Looks like nobody got the answer this time.');
 				});
 		});
-	},
+	}
 };
