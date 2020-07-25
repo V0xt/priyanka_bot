@@ -1,15 +1,15 @@
 const { Command } = require('discord.js-commando');
 
-module.exports = class SkipCommand extends Command {
+module.exports = class SkipAllCommand extends Command {
 	constructor(client) {
 		super(client, {
-			name: 'skip',
-			description: 'Skip the current playing song.',
-			aliases: ['s'],
+			name: 'skipall',
+			description: 'Skip all songs in queue.',
+			aliases: ['sa'],
+			memberName: 'skipall',
 			group: 'music',
-			memberName: 'skip',
 			guildOnly: true,
-			usage: '!s',
+			usage: '!sa',
 		});
 	}
 
@@ -23,6 +23,11 @@ module.exports = class SkipCommand extends Command {
 		) {
 			return message.reply('There is no song playing right now!');
 		}
+		if (!message.guild.musicData.queue) {
+			return message.say('There are no songs in queue');
+		}
 		message.guild.musicData.songDispatcher.end();
+		message.guild.musicData.queue.length = 0;
+		return;
 	}
 };

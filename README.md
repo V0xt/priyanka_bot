@@ -26,14 +26,16 @@ Visit [wiki](https://github.com/V0xt/priyanka_bot/wiki) or try use !help to get 
 ### Setting up APIs:
 For some commands to work you will need to add own API keys to .env file:
 
-- Weather commands: [openWeather](https://home.openweathermap.org/api_keys); <br>
-- Ethereum stats: [etherscan](https://etherscan.io/myapikey); <br>
-- Wolfram: [wolfram](https://products.wolframalpha.com/api/). (In dev)<br> 
+- Weather commands: [openWeatherMap](https://home.openweathermap.org/api_keys) <br>
+- Ethereum stats: [etherscan](https://etherscan.io/myapikey) <br>
+- YouTube Data API: [tutorial](https://developers.google.com/youtube/v3/getting-started) <br> 
+- (In dev): [wolframAlpha](https://products.wolframalpha.com/api/) 
 
-## Useful links
+## Thanks for help
 
 - [Discord.js Guide](https://discordjs.guide/) <br>
-- [AnIdiotsGuide](https://anidiots.guide/)
+- [AnIdiotsGuide](https://anidiots.guide/) <br>
+- [Music Guide](https://dev.to/galnir/how-to-write-a-music-command-using-the-discord-js-library-462f) 
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details

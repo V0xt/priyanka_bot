@@ -1,15 +1,15 @@
 const { Command } = require('discord.js-commando');
 
-module.exports = class SkipCommand extends Command {
+module.exports = class PauseCommand extends Command {
 	constructor(client) {
 		super(client, {
-			name: 'skip',
-			description: 'Skip the current playing song.',
-			aliases: ['s'],
+			name: 'pause',
+			description: 'Pause the current playing song.',
+			aliases: ['pause-song', 'hold', 'stop'],
+			memberName: 'pause',
 			group: 'music',
-			memberName: 'skip',
 			guildOnly: true,
-			usage: '!s',
+			usage: '!p',
 		});
 	}
 
@@ -21,8 +21,11 @@ module.exports = class SkipCommand extends Command {
 			typeof message.guild.musicData.songDispatcher == 'undefined' ||
 			message.guild.musicData.songDispatcher == null
 		) {
-			return message.reply('There is no song playing right now!');
+			return message.say('There is no song playing right now!');
 		}
-		message.guild.musicData.songDispatcher.end();
+
+		message.say('Song paused :pause_button:');
+
+		message.guild.musicData.songDispatcher.pause();
 	}
 };
