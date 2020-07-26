@@ -22,7 +22,7 @@ Structures.extend('Guild', Guild => {
 
 const client = new CommandoClient({
 	commandPrefix: process.env.prefix,
-	owner: '244140780967559169',
+	owner: process.env.ownerID,
 	unknownCommandResponse: false,
 });
 
