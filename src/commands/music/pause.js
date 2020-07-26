@@ -9,7 +9,7 @@ module.exports = class PauseCommand extends Command {
 			memberName: 'pause',
 			group: 'music',
 			guildOnly: true,
-			usage: '!p',
+			usage: '!pause',
 		});
 	}
 
