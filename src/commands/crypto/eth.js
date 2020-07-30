@@ -1,50 +1,79 @@
 const { Command } = require('discord.js-commando');
-const ethApi = process.env.ethApi;
+const web3 = require('web3');
 const fetch = require('node-fetch');
+const ethApi = process.env.ethApi;
 
 module.exports = class EthereumAPI extends Command {
-	constructor(client) {
-		super(client, {
-			name: 'eth',
-			description: 'Looks up current Ether price in USD and bitcoin.',
-			group: 'crypto',
-			memberName: 'eth',
-			guildOnly: false,
-			aliases: ['ethereum', 'ether'],
-			usage: `\`!eth\` or \`!eth [account address]\``,
-			throttling: {
-				usages: 2,
-				duration: 10,
-			},
-			args: [
-				{
-					key: 'address',
-					prompt: 'What address would you like me to check?',
-					type: 'string',
-					default: '',
-				},
-			],
-		});
-	}
+  constructor(client) {
+    super(client, {
+      name: 'eth',
+      description: `
+        Search for the current Ether price in USD and bitcoin 
+        or check the Ethereum wallet balance by its address.
+      `,
+      group: 'crypto',
+      memberName: 'eth',
+      guildOnly: false,
+      aliases: ['ethereum', 'ether'],
+      examples: [
+        '`!eth`',
+        '`!eth 0x00De4B13153673BCAE2616b67bf822500d325Fc3 `',
+      ],
+      throttling: {
+        usages: 2,
+        duration: 10,
+      },
+      args: [
+        {
+          key: 'address',
+          prompt: 'What address would you like me to check?',
+          type: 'string',
+          validate: address => web3.utils.isAddress(address),
+          error: 'Invalid Ethereum address.',
+          default: '',
+        },
+      ],
+    });
+  }
 
-	async run(message, { address }) {
-		let response = await fetch(`https://api.etherscan.io/api?module=stats&action=ethprice&apikey=${ethApi}`).then(response => response.json());
-		const result = response.result;
-		if(!address.length) {
-			message.say(`Ether price in bitcoin on ${this.timestampToDate(result.ethbtc_timestamp)}\n${result.ethbtc} BTC\nEther price in USD on ${this.timestampToDate(result.ethbtc_timestamp)}\n${result.ethusd} USD`);
-			return message.say('You can send \`!eth [account address]\` to get balance of a specific ethereum address');
-		}
-		response = await fetch(`https://api.etherscan.io/api?module=account&action=balance&address=${address}&tag=latest&apikey=${ethApi}`).then(response => response.json());
-		if(response.status === '0') {
-			return message.say('Invalid address format.');
-		}
-		const ether = response.result / Math.pow(10, 18);
-		const usd = ether * result.ethusd;
-		message.say(`Address ${address}\nBalance:  ${ether} Ether\nEther value:  $${usd.toFixed(2)} ($${result.ethusd}/ETH)`);
-	}
+  async run(message, { address }) {
+    const prices = await fetch(`
+      https://api.etherscan.io/api?module=stats&action=ethprice&apikey=${ethApi}
+    `)
+      .then(response => response.json())
+      .then(response => response.result);
+    if(!address) {
+      message.say(`
+        Ether price in bitcoin on ${this.timestampToDate(prices.ethbtc_timestamp)}
+        ${prices.ethbtc} BTC
+        Ether price in USD on ${this.timestampToDate(prices.ethbtc_timestamp)}
+        ${prices.ethusd} USD
+        You can use \`!eth [wallet_address]\` to check balance of ethereum wallet.
+      `.replace(/  +/g, ''));
+    } else {
+      const balanceInWei = await fetch(`
+        https://api.etherscan.io/api?module=account&action=balance&address=${address}&tag=latest&apikey=${ethApi}
+      `)
+        .then(response => response.json())
+        .then(response => {
+          if (response.status === '0') {
+            return message.say('Cant get wallet data.');
+          }
+          return response.result;
+        });
 
-	timestampToDate(timestamp) {
-		const date = new Date(timestamp * 1000);
-		return date.toUTCString();
-	}
+      const etherValue = web3.utils.fromWei(balanceInWei, 'ether');
+      const usdValue = etherValue * prices.ethusd;
+      message.say(`
+        Address ${address}
+        Balance: ${etherValue} Ether
+        Ether value: $${usdValue.toFixed(2)} ($${prices.ethusd}/ETH)
+      `.replace(/  +/g, ''));
+    }
+  }
+
+  timestampToDate(timestamp) {
+    const date = new Date(timestamp * 1000);
+    return date.toUTCString();
+  }
 };
