@@ -7,7 +7,7 @@ module.exports = class OpenWeatherAPI extends Command {
 		super(client, {
 			name: 'weather',
 			description: 'Shows the current weather in given city.',
-			group: 'utils',
+			group: 'other',
 			memberName: 'weather',
 			guildOnly: false,
 			aliases: ['temp', 'sky'],

@@ -5,7 +5,7 @@ module.exports = class UserInfo extends Command {
 		super(client, {
 			name: 'userinfo',
 			description: 'Display info about yourself.',
-			group: 'utils',
+			group: 'other',
 			memberName: 'userinfo',
 			guildOnly: false,
 			aliases: ['user-info', 'info'],

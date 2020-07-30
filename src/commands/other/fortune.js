@@ -6,7 +6,7 @@ module.exports = class Fortune extends Command {
 		super(client, {
 			name: 'fortune',
 			description: 'Replies with a random fortune cookie quote.',
-			group: 'utils',
+			group: 'other',
 			memberName: 'fortune',
 			guildOnly: false,
 			aliases: ['cookie'],

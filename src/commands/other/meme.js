@@ -6,7 +6,7 @@ module.exports = class Meme extends Command {
 		super(client, {
 			name: 'meme',
 			description: 'Returns random meme template from imgflip.com',
-			group: 'utils',
+			group: 'other',
 			memberName: 'meme',
 			guildOnly: false,
 			// aliases: [ ],

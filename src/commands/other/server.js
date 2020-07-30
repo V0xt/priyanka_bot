@@ -5,7 +5,7 @@ module.exports = class ServerInfo extends Command {
 		super(client, {
 			name: 'server',
 			description: 'Displays server info (id, name, region, members count).',
-			group: 'utils',
+			group: 'other',
 			memberName: 'server',
 			guildOnly: true,
 			// aliases: [],

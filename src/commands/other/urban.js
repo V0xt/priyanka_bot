@@ -10,7 +10,7 @@ module.exports = class UrbanDictionary extends Command {
 		super(client, {
 			name: 'urban',
 			description: 'Get the definition for a specified term from urbandictionary.com',
-			group: 'utils',
+			group: 'other',
 			memberName: 'urban',
 			guildOnly: false,
 			// aliases: [],

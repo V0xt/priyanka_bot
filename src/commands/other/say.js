@@ -6,7 +6,7 @@ module.exports = class SayCommand extends Command {
 			name: 'say',
 			description: 'Makes me say something.',
 			group: 'utils',
-			memberName: 'say',
+			memberName: 'other',
 			guildOnly: true,
 			aliases: ['parrot', 'copy'],
 			usage: '!say [something]',

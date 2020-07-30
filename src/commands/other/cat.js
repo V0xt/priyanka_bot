@@ -6,7 +6,7 @@ module.exports = class Cat extends Command {
 		super(client, {
 			name: 'cat',
 			description: 'Returns random cat picture from aws.random.cat',
-			group: 'utils',
+			group: 'other',
 			memberName: 'cat',
 			guildOnly: false,
 			// aliases: [],
