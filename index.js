@@ -32,8 +32,7 @@ client.registry
 		['admin', 'Admin Commands'],
 		['crypto', 'Crypto Commands'],
 		['music', 'Music Commands'],
-		['utils', 'Utility Commands'],
-		// ['wolfram', 'Wolfram Command Group'],
+		['other', 'Other Commands'],
 	])
 	.registerDefaultGroups()
 	.registerDefaultCommands({
