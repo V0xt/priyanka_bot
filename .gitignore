@@ -1,4 +1,4 @@
 node_modules
 .env
 src/unused
-__tests__
+test
