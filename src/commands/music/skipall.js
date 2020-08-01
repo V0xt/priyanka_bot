@@ -27,6 +27,5 @@ module.exports = class SkipAllCommand extends Command {
     }
     message.guild.musicData.songDispatcher.end();
     message.guild.musicData.queue.length = 0;
-    return;
   }
 };

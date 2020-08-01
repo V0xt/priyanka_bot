@@ -20,7 +20,8 @@ module.exports = class About extends Command {
 
     if (isNaN(amount)) {
       return message.reply('That doesn\'t seem to be a valid number.');
-    }	else if (amount <= 1 || amount > 100) {
+    }
+    if (amount <= 1 || amount > 100) {
       return message.reply('You need to input a number between 1 and 99.');
     }
 

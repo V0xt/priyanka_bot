@@ -8,8 +8,8 @@ module.exports = class EthereumAPI extends Command {
     super(client, {
       name: 'eth',
       description: `
-        Search for the current Ether price in USD and bitcoin 
-        or check the Ethereum wallet balance by its address.
+        Search for the current Ether price in USD and BTC
+        or check the Ethereum wallet balance.
       `,
       group: 'crypto',
       memberName: 'eth',
@@ -46,7 +46,7 @@ module.exports = class EthereumAPI extends Command {
       message.say(`
         Ether price in bitcoin on ${this.timestampToDate(prices.ethbtc_timestamp)}
         ${prices.ethbtc} BTC
-        Ether price in USD on ${this.timestampToDate(prices.ethbtc_timestamp)}
+        Ether price in USD on ${this.timestampToDate(prices.ethusd_timestamp)}
         ${prices.ethusd} USD
         You can use \`!eth [wallet_address]\` to check balance of ethereum wallet.
       `.replace(/  +/g, ''));
@@ -55,12 +55,7 @@ module.exports = class EthereumAPI extends Command {
         https://api.etherscan.io/api?module=account&action=balance&address=${address}&tag=latest&apikey=${ethApi}
       `)
         .then(response => response.json())
-        .then(response => {
-          if (response.status === '0') {
-            return message.say('Cant get wallet data.');
-          }
-          return response.result;
-        });
+        .then(response => response.result);
 
       const etherValue = web3.utils.fromWei(balanceInWei, 'ether');
       const usdValue = etherValue * prices.ethusd;
