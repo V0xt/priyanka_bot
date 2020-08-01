@@ -30,7 +30,8 @@ module.exports = class UrbanDictionary extends Command {
   async run(message, { term }) {
     const query = querystring.stringify({ term: term });
 
-    const { list } = await fetch(`https://api.urbandictionary.com/v0/define?${query}`).then(response => response.json());
+    const { list } = await fetch(`https://api.urbandictionary.com/v0/define?${query}`)
+      .then(response => response.json());
 
     if (!list.length) {
       return message.say(`No results found for **${term}**.`);

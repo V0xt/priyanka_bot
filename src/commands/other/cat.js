@@ -18,7 +18,8 @@ module.exports = class Cat extends Command {
   }
 
   async run(message) {
-    const result = await fetch(`https://api.thecatapi.com/v1/images/search?api=${catApi}&size=small`).then(response => response.json());
+    const result = await fetch(`https://api.thecatapi.com/v1/images/search?api=${catApi}&size=small`)
+      .then(response => response.json());
     message.say(result[0].url);
   }
 };

@@ -37,9 +37,7 @@ module.exports = class EthereumAPI extends Command {
   }
 
   async run(message, { address }) {
-    const prices = await fetch(`
-      https://api.etherscan.io/api?module=stats&action=ethprice&apikey=${ethApi}
-    `)
+    const prices = await fetch(`https://api.etherscan.io/api?module=stats&action=ethprice&apikey=${ethApi}`)
       .then(response => response.json())
       .then(response => response.result);
     if(!address) {
@@ -51,9 +49,7 @@ module.exports = class EthereumAPI extends Command {
         You can use \`!eth [wallet_address]\` to check balance of ethereum wallet.
       `.replace(/  +/g, ''));
     } else {
-      const balanceInWei = await fetch(`
-        https://api.etherscan.io/api?module=account&action=balance&address=${address}&tag=latest&apikey=${ethApi}
-      `)
+      const balanceInWei = await fetch(`https://api.etherscan.io/api?module=account&action=balance&address=${address}&tag=latest&apikey=${ethApi}`)
         .then(response => response.json())
         .then(response => response.result);
 
