@@ -1,6 +1,6 @@
 # Priyanka JavaScript bot for Discord
 
-I learn to program and in parallel with studies, i'm writing this bot for myself and my friends. Feel free to use it's code for own projects, report bugs or send pull requests.    
+I learn to program and in parallel with studies, I'm writing this bot for myself and my friends. Feel free to use it's code for own projects, report bugs, or send pull requests.    
 
 ## Features
 
