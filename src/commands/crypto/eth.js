@@ -7,10 +7,7 @@ module.exports = class EthereumAPI extends Command {
   constructor(client) {
     super(client, {
       name: 'eth',
-      description: `
-        Search for the current Ether price in USD and BTC
-        or check the Ethereum wallet balance.
-      `,
+      description: `Search for the current Ether price in USD and BTC or check the Ethereum wallet balance.`,
       group: 'crypto',
       memberName: 'eth',
       guildOnly: false,
