@@ -1,4 +1,5 @@
 # Priyanka JavaScript bot for Discord
+[![Maintainability](https://api.codeclimate.com/v1/badges/c811e4775e720a6d0c3a/maintainability)](https://codeclimate.com/github/v0xat/priyanka_bot/maintainability)
 
 I learn to program and in parallel with studies, I'm writing this bot for myself and my friends. Feel free to use it's code for own projects, report bugs, or send pull requests.    
 
