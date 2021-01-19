@@ -3,3 +3,6 @@ install:
 
 start:
 	node index.js
+
+lint:
+	npx eslint .
