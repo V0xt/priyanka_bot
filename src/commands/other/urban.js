@@ -28,13 +28,14 @@ module.exports = class UrbanDictionary extends Command {
   }
 
   async run(message, { term }) {
-    const query = querystring.stringify({ term: term });
+    const query = querystring.stringify({ term });
 
     const { list } = await fetch(`https://api.urbandictionary.com/v0/define?${query}`)
-      .then(response => response.json());
+      .then((response) => response.json());
 
     if (!list.length) {
-      return message.say(`No results found for **${term}**.`);
+      message.say(`No results found for **${term}**.`);
+      return;
     }
 
     const [answer] = list;

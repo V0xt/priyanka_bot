@@ -16,16 +16,18 @@ module.exports = class About extends Command {
   }
 
   run(message, args) {
-    const amount = parseInt(args[0]) + 1;
+    const amount = parseInt(args[0], 10) + 1;
 
-    if (isNaN(amount)) {
-      return message.reply('That doesn\'t seem to be a valid number.');
+    if (Number.isNaN(amount)) {
+      message.reply('That doesn\'t seem to be a valid number.');
+      return;
     }
     if (amount <= 1 || amount > 100) {
-      return message.reply('You need to input a number between 1 and 99.');
+      message.reply('You need to input a number between 1 and 99.');
+      return;
     }
 
-    message.channel.bulkDelete(amount).catch(err => {
+    message.channel.bulkDelete(amount).catch((err) => {
       console.error(err);
       message.say('there was an error trying to delete messages in this channel!');
     });

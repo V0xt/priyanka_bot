@@ -21,7 +21,7 @@ module.exports = class Fortune extends Command {
     const fortunesLimit = 1;
     const fortunesToSkip = Math.floor(Math.random() * (540 - 1 + 1)) + 1;
     const result = await fetch(`http://fortunecookieapi.herokuapp.com/v1/fortunes?limit=${fortunesLimit}&skip=${fortunesToSkip}`)
-      .then(response => response.json());
+      .then((response) => response.json());
     message.say(result[0].message);
   }
 };

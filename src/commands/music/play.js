@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 const { Command } = require('discord.js-commando');
 const { MessageEmbed } = require('discord.js');
 const Youtube = require('simple-youtube-api');
@@ -36,7 +37,10 @@ module.exports = class PlayCommand extends Command {
 
   async run(message, { query }) {
     const voiceChannel = message.member.voice.channel;
-    if (!voiceChannel) return message.say('Join a voice channel and try again');
+    if (!voiceChannel) {
+      message.say('Join a voice channel and try again');
+      return;
+    }
 
     if (query.match(/^(?!.*\?.*\bv=)https:\/\/www\.youtube\.com\/.*\?.*\blist=.*$/)) {
       try {
@@ -44,6 +48,7 @@ module.exports = class PlayCommand extends Command {
         const videosObj = await playlist.getVideos();
         message.say('Loading playlist');
         for (let i = 0; i < videosObj.length; i += 1) {
+          // eslint-disable-next-line no-await-in-loop
           const video = await videosObj[i].fetch();
           const url = `https://www.youtube.com/watch?v=${video.raw.id}`;
           const { title } = video.raw.snippet;
@@ -61,17 +66,20 @@ module.exports = class PlayCommand extends Command {
         }
         if (message.guild.musicData.isPlaying === false) {
           message.guild.musicData.isPlaying = true;
-          return this.playSong(message.guild.musicData.queue, message);
+          this.playSong(message.guild.musicData.queue, message);
+          return;
         }
         if (message.guild.musicData.isPlaying === true) {
-          return message.say(`
+          message.say(`
             Playlist - :musical_note:  ${playlist.title}
             :musical_note: has been added to queue
           `);
+          return;
         }
-      }	catch (err) {
+      } catch (err) {
         console.error(err);
-        return message.say('Playlist is either private or it does not exist.');
+        message.say('Playlist is either private or it does not exist.');
+        return;
       }
     }
 
@@ -100,14 +108,17 @@ module.exports = class PlayCommand extends Command {
           || typeof message.guild.musicData.isPlaying === 'undefined'
         ) {
           message.guild.musicData.isPlaying = true;
-          return this.playSong(message.guild.musicData.queue, message);
+          this.playSong(message.guild.musicData.queue, message);
+          return;
         }
         if (message.guild.musicData.isPlaying === true) {
-          return message.say(`${song.title} added to queue`);
+          message.say(`${song.title} added to queue`);
+          return;
         }
       } catch (err) {
         console.error(err);
-        return message.say('Something went wrong, please try again later');
+        message.say('Something went wrong, please try again later');
+        return;
       }
     }
 
@@ -117,7 +128,8 @@ module.exports = class PlayCommand extends Command {
       );
     });
     if (videos.length < 5 || !videos) {
-      return message.say('I had some trouble finding what you were looking for, please try again or be more specific.');
+      message.say('I had some trouble finding what you were looking for, please try again or be more specific.');
+      return;
     }
     const vidNameArr = [];
     for (let i = 0; i < videos.length; i += 1) {
@@ -136,9 +148,7 @@ module.exports = class PlayCommand extends Command {
     const songEmbed = await message.channel.send({ embed });
     message.channel
       .awaitMessages(
-        (msg) => {
-          return (msg.content > 0 && msg.content < 6) || msg.content === 'exit';
-        },
+        (msg) => (msg.content > 0 && msg.content < 6) || msg.content === 'exit',
         {
           max: 1,
           time: 60000,
@@ -146,8 +156,11 @@ module.exports = class PlayCommand extends Command {
         },
       )
       .then((response) => {
-        const videoIndex = parseInt(response.first().content);
-        if (response.first().content === 'exit') return songEmbed.delete();
+        const videoIndex = parseInt(response.first().content, 10);
+        if (response.first().content === 'exit') {
+          songEmbed.delete();
+          return;
+        }
         youtube
           .getVideoByID(videos[videoIndex - 1].id)
           .then((video) => {
@@ -174,7 +187,7 @@ module.exports = class PlayCommand extends Command {
               if (songEmbed) {
                 songEmbed.delete();
               }
-              return message.say(`${video.title} added to queue`);
+              message.say(`${video.title} added to queue`);
             }
           })
           .catch((err) => {
@@ -222,7 +235,8 @@ module.exports = class PlayCommand extends Command {
             if (queue[1]) videoEmbed.addField('Next Song:', queue[1].title);
 
             message.say(videoEmbed);
-            message.guild.musicData.nowPlaying = queue[0];
+            const [song] = queue[0];
+            message.guild.musicData.nowPlaying = song;
 
             return queue.shift();
           })
@@ -251,11 +265,12 @@ module.exports = class PlayCommand extends Command {
   }
 
   formatDuration(durationObj) {
-    const duration = `${durationObj.hours ? durationObj.hours + ':' : ''}${
+    const duration = `${durationObj.hours ? `${durationObj.hours}:` : ''}${
       durationObj.minutes ? durationObj.minutes : '00'
     }:${
-      durationObj.seconds < 10 ? '0' + durationObj.seconds
-        : durationObj.seconds	? durationObj.seconds
+      // eslint-disable-next-line no-nested-ternary
+      durationObj.seconds < 10 ? `0${durationObj.seconds}`
+        : durationObj.seconds ? durationObj.seconds
           : '00'
     }`;
     return duration;

@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 const { Command } = require('discord.js-commando');
 
 module.exports = class SkipAllCommand extends Command {
@@ -14,17 +15,23 @@ module.exports = class SkipAllCommand extends Command {
 
   run(message) {
     const voiceChannel = message.member.voice.channel;
-    if (!voiceChannel) return message.reply('Join a voice channel and try again');
+    if (!voiceChannel) {
+      message.reply('Join a voice channel and try again');
+      return;
+    }
 
     if (
       typeof message.guild.musicData.songDispatcher === 'undefined'
       || message.guild.musicData.songDispatcher === null
     ) {
-      return message.reply('There is no song playing right now!');
+      message.reply('There is no song playing right now!');
+      return;
     }
     if (!message.guild.musicData.queue) {
-      return message.say('There are no songs in queue');
+      message.say('There are no songs in queue');
+      return;
     }
+
     message.guild.musicData.songDispatcher.end();
     message.guild.musicData.queue.length = 0;
   }

@@ -14,13 +14,17 @@ module.exports = class SkipCommand extends Command {
 
   run(message) {
     const voiceChannel = message.member.voice.channel;
-    if (!voiceChannel) return message.reply('Join a voice channel and try again');
+    if (!voiceChannel) {
+      message.reply('Join a voice channel and try again');
+      return;
+    }
 
     if (
       typeof message.guild.musicData.songDispatcher === 'undefined'
       || message.guild.musicData.songDispatcher === null
     ) {
-      return message.reply('There is no song playing right now!');
+      message.reply('There is no song playing right now!');
+      return;
     }
     message.guild.musicData.songDispatcher.end();
   }

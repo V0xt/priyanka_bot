@@ -14,13 +14,17 @@ module.exports = class ResumeCommand extends Command {
 
   run(message) {
     const voiceChannel = message.member.voice.channel;
-    if (!voiceChannel) return message.reply('Join a channel and try again');
+    if (!voiceChannel) {
+      message.reply('Join a channel and try again');
+      return;
+    }
 
     if (
       typeof message.guild.musicData.songDispatcher === 'undefined'
       || message.guild.musicData.songDispatcher === null
     ) {
-      return message.reply('There is no song playing right now!');
+      message.reply('There is no song playing right now!');
+      return;
     }
 
     message.say('Song resumed :play_pause:');

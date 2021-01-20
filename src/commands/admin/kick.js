@@ -30,9 +30,12 @@ module.exports = class KickCommand extends Command {
   run(message, { userToKick, reason }) {
     const user = message.mentions.members.first()
       || message.guild.members.fetch(userToKick);
+
     if (user === undefined) {
-      return message.channel.send('Please try again with a valid user');
+      message.channel.send('Please try again with a valid user');
+      return;
     }
+
     user.kick(reason).then(() => {
       const kickEmbed = new MessageEmbed()
         .addField('Kicked:', userToKick)

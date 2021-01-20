@@ -21,12 +21,11 @@ module.exports = class Avatar extends Command {
 
   run(message) {
     if (!message.mentions.users.size) {
-      return message.say(`Your avatar: <${message.author.displayAvatarURL()}>`);
+      message.say(`Your avatar: <${message.author.displayAvatarURL()}>`);
+      return;
     }
 
-    const avatarList = message.mentions.users.map(user => {
-      return `${user.username}'s avatar: <${user.displayAvatarURL()}>`;
-    });
+    const avatarList = message.mentions.users.map((user) => `${user.username}'s avatar: <${user.displayAvatarURL()}>`);
 
     message.say(avatarList);
   }

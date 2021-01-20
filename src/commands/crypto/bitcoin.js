@@ -19,7 +19,7 @@ module.exports = class BitcoinAPI extends Command {
 
   async run(message) {
     const result = await fetch('https://blockchain.info/ticker')
-      .then(response => response.json());
+      .then((response) => response.json());
 
     message.say(`
       BUY: ${result.USD.buy}${result.USD.symbol}

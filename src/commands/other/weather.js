@@ -31,7 +31,7 @@ module.exports = class OpenWeatherAPI extends Command {
 
   async run(message, { city }) {
     const result = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${weatherApi}`)
-      .then(response => response.json());
+      .then((response) => response.json());
 
     message.say(`
       ${result.name}, ${result.sys.country}, ${result.weather[0].description}

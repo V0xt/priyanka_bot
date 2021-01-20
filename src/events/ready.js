@@ -5,9 +5,7 @@ module.exports = async (client) => {
   console.log('Servers:');
   client.guilds.cache.map((guild) => {
     console.log(` - ${guild.name}`);
-    guild.channels.cache.map((channel) => {
-      console.log(` -- ${channel.name} (${channel.type}) - ${channel.id}`);
-    });
+    return guild.channels.cache.map((channel) => console.log(` -- ${channel.name} (${channel.type}) - ${channel.id}`));
   });
 
   console.log('Ready!');

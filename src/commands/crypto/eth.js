@@ -38,6 +38,7 @@ module.exports = class EthereumAPI extends Command {
     const prices = await fetch(`https://api.etherscan.io/api?module=stats&action=ethprice&apikey=${ethApi}`)
       .then((response) => response.json())
       .then((response) => response.result);
+
     if (!address) {
       message.say(`
         Ether price in bitcoin on ${this.constructor.timestampToDate(prices.ethbtc_timestamp)}
