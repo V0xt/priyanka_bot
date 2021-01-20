@@ -17,8 +17,8 @@ module.exports = class ResumeCommand extends Command {
     if (!voiceChannel) return message.reply('Join a channel and try again');
 
     if (
-      typeof message.guild.musicData.songDispatcher == 'undefined' ||
-      message.guild.musicData.songDispatcher === null
+      typeof message.guild.musicData.songDispatcher === 'undefined'
+      || message.guild.musicData.songDispatcher === null
     ) {
       return message.reply('There is no song playing right now!');
     }

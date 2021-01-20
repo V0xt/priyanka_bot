@@ -1,5 +1,6 @@
 const { Command } = require('discord.js-commando');
 const fetch = require('node-fetch');
+
 const weatherApi = process.env.openWeatherApi;
 
 module.exports = class OpenWeatherAPI extends Command {

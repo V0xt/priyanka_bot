@@ -21,7 +21,7 @@ module.exports = class SayCommand extends Command {
           key: 'text',
           prompt: 'What would you like me to say?',
           type: 'string',
-          validate: text => text.length < 201,
+          validate: (text) => text.length < 201,
         },
       ],
     });

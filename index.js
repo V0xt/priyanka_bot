@@ -1,11 +1,13 @@
+/* eslint-disable import/no-dynamic-require */
+/* eslint-disable global-require */
 require('dotenv').config();
-const { CommandoClient } = require('discord.js-commando');
+const Commando = require('discord.js-commando');
 const Discord = require('discord.js');
 const Canvas = require('canvas');
 const path = require('path');
 const fs = require('fs');
 
-Discord.Structures.extend('Guild', Guild => {
+Discord.Structures.extend('Guild', (Guild) => {
   class MusicGuild extends Guild {
     constructor(client, data) {
       super(client, data);
@@ -21,7 +23,7 @@ Discord.Structures.extend('Guild', Guild => {
   return MusicGuild;
 });
 
-const client = new CommandoClient({
+const client = new Commando.CommandoClient({
   commandPrefix: process.env.prefix,
   owner: process.env.ownerID,
   unknownCommandResponse: false,
@@ -39,12 +41,13 @@ client.registry
   .registerDefaultCommands({
     eval: false,
   })
-  .registerCommandsIn(path.join(__dirname, 'src/commands'));
+  .registerCommandsIn(path.join(process.cwd(), 'src/commands'));
 
 fs.readdir('./src/events/', (err, files) => {
-  if (err) return console.error(err);
-  files.forEach(file => {
-    const event = require(`./src/events/${file}`);
+  if (err) console.error(err);
+  files.forEach((file) => {
+    const eventPath = `./src/events/${file}`;
+    const event = require(eventPath);
     const eventName = file.split('.')[0];
     client.on(eventName, event.bind(null, client));
   });
@@ -62,7 +65,7 @@ const applyText = (canvas, text) => {
 };
 
 client.on('guildMemberAdd', async (member) => {
-  const channel = member.guild.channels.cache.find(ch => ch.name === 'general');
+  const channel = member.guild.channels.cache.find((ch) => ch.name === 'general');
   if (!channel) return;
 
   const canvas = Canvas.createCanvas(700, 250);

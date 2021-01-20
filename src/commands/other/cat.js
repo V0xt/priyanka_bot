@@ -23,4 +23,3 @@ module.exports = class Cat extends Command {
     message.say(result[0].url);
   }
 };
-

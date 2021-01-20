@@ -2,6 +2,7 @@ const { Command } = require('discord.js-commando');
 const { MessageEmbed } = require('discord.js');
 const Youtube = require('simple-youtube-api');
 const ytdl = require('ytdl-core');
+
 const youtube = new Youtube(process.env.youtubeAPI);
 
 module.exports = class PlayCommand extends Command {
@@ -27,7 +28,7 @@ module.exports = class PlayCommand extends Command {
           key: 'query',
           prompt: 'What video would you like to play to?',
           type: 'string',
-          validate: query => query.length > 0 && query.length < 200,
+          validate: (query) => query.length > 0 && query.length < 200,
         },
       ],
     });
@@ -45,10 +46,10 @@ module.exports = class PlayCommand extends Command {
         for (let i = 0; i < videosObj.length; i += 1) {
           const video = await videosObj[i].fetch();
           const url = `https://www.youtube.com/watch?v=${video.raw.id}`;
-          const title = video.raw.snippet.title;
+          const { title } = video.raw.snippet;
           let duration = this.formatDuration(video.duration);
           const thumbnail = video.thumbnails.high.url;
-          if (duration == '00:00') duration = 'Live Stream';
+          if (duration === '00:00') duration = 'Live Stream';
           const song = {
             url,
             title,
@@ -58,11 +59,11 @@ module.exports = class PlayCommand extends Command {
           };
           message.guild.musicData.queue.push(song);
         }
-        if (message.guild.musicData.isPlaying == false) {
+        if (message.guild.musicData.isPlaying === false) {
           message.guild.musicData.isPlaying = true;
           return this.playSong(message.guild.musicData.queue, message);
         }
-        if (message.guild.musicData.isPlaying == true) {
+        if (message.guild.musicData.isPlaying === true) {
           return message.say(`
             Playlist - :musical_note:  ${playlist.title}
             :musical_note: has been added to queue
@@ -82,10 +83,10 @@ module.exports = class PlayCommand extends Command {
           .split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
         const id = query[2].split(/[^0-9a-z_-]/i)[0];
         const video = await youtube.getVideoByID(id);
-        const title = video.title;
+        const { title } = video;
         let duration = this.formatDuration(video.duration);
         const thumbnail = video.thumbnails.high.url;
-        if (duration == '00:00') duration = 'Live Stream';
+        if (duration === '00:00') duration = 'Live Stream';
         const song = {
           url,
           title,
@@ -95,16 +96,16 @@ module.exports = class PlayCommand extends Command {
         };
         message.guild.musicData.queue.push(song);
         if (
-          message.guild.musicData.isPlaying == false ||
-          typeof message.guild.musicData.isPlaying == 'undefined'
+          message.guild.musicData.isPlaying === false
+          || typeof message.guild.musicData.isPlaying === 'undefined'
         ) {
           message.guild.musicData.isPlaying = true;
           return this.playSong(message.guild.musicData.queue, message);
         }
-        if (message.guild.musicData.isPlaying == true) {
+        if (message.guild.musicData.isPlaying === true) {
           return message.say(`${song.title} added to queue`);
         }
-      }	catch (err) {
+      } catch (err) {
         console.error(err);
         return message.say('Something went wrong, please try again later');
       }
@@ -119,7 +120,7 @@ module.exports = class PlayCommand extends Command {
       return message.say('I had some trouble finding what you were looking for, please try again or be more specific.');
     }
     const vidNameArr = [];
-    for (let i = 0; i < videos.length; i++) {
+    for (let i = 0; i < videos.length; i += 1) {
       vidNameArr.push(`${i + 1}: ${videos[i].title}`);
     }
     vidNameArr.push('exit');
@@ -151,10 +152,10 @@ module.exports = class PlayCommand extends Command {
           .getVideoByID(videos[videoIndex - 1].id)
           .then((video) => {
             const url = `https://www.youtube.com/watch?v=${video.raw.id}`;
-            const title = video.title;
+            const { title } = video;
             let duration = this.formatDuration(video.duration);
             const thumbnail = video.thumbnails.high.url;
-            if (duration == '00:00') duration = 'Live Stream';
+            if (duration === '00:00') duration = 'Live Stream';
             const song = {
               url,
               title,
@@ -163,13 +164,13 @@ module.exports = class PlayCommand extends Command {
               voiceChannel,
             };
             message.guild.musicData.queue.push(song);
-            if (message.guild.musicData.isPlaying == false) {
+            if (message.guild.musicData.isPlaying === false) {
               message.guild.musicData.isPlaying = true;
               if (songEmbed) {
                 songEmbed.delete();
               }
               this.playSong(message.guild.musicData.queue, message);
-            } else if (message.guild.musicData.isPlaying == true) {
+            } else if (message.guild.musicData.isPlaying === true) {
               if (songEmbed) {
                 songEmbed.delete();
               }
@@ -200,7 +201,7 @@ module.exports = class PlayCommand extends Command {
     let voiceChannel;
     queue[0].voiceChannel
       .join()
-      .then(connection => {
+      .then((connection) => {
         const dispatcher = connection
           .play(
             ytdl(queue[0].url, {
@@ -234,7 +235,7 @@ module.exports = class PlayCommand extends Command {
             message.guild.musicData.songDispatcher = null;
             return voiceChannel.leave();
           })
-          .on('error', e => {
+          .on('error', (e) => {
             message.say('Cannot play song');
             message.guild.musicData.queue.length = 0;
             message.guild.musicData.isPlaying = false;
@@ -243,7 +244,7 @@ module.exports = class PlayCommand extends Command {
             return voiceChannel.leave();
           });
       })
-      .catch(e => {
+      .catch((e) => {
         console.error(e);
         return voiceChannel.leave();
       });

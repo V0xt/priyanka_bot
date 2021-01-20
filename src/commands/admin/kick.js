@@ -28,10 +28,9 @@ module.exports = class KickCommand extends Command {
   }
 
   run(message, { userToKick, reason }) {
-    const user =
-      message.mentions.members.first() ||
-      message.guild.members.fetch(userToKick);
-    if (user == undefined) {
+    const user = message.mentions.members.first()
+      || message.guild.members.fetch(userToKick);
+    if (user === undefined) {
       return message.channel.send('Please try again with a valid user');
     }
     user.kick(reason).then(() => {
@@ -40,7 +39,7 @@ module.exports = class KickCommand extends Command {
         .addField('Reason:', reason)
         .setColor('#420626');
       message.say(kickEmbed);
-    }).catch(e => {
+    }).catch((e) => {
       message.say(`
         Something went wrong when trying to kick this user, 
         I probably do not have the permission to kick him.
