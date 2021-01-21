@@ -64,18 +64,16 @@ module.exports = class PlayCommand extends Command {
           };
           message.guild.musicData.queue.push(song);
         }
-        if (message.guild.musicData.isPlaying === false) {
-          message.guild.musicData.isPlaying = true;
-          this.playSong(message.guild.musicData.queue, message);
-          return;
-        }
-        if (message.guild.musicData.isPlaying === true) {
+        if (message.guild.musicData.isPlaying) {
           message.say(`
             Playlist - :musical_note:  ${playlist.title}
             :musical_note: has been added to queue
           `);
           return;
         }
+        message.guild.musicData.isPlaying = true;
+        this.playSong(message.guild.musicData.queue, message);
+        return;
       } catch (err) {
         console.error(err);
         message.say('Playlist is either private or it does not exist.');
@@ -103,18 +101,13 @@ module.exports = class PlayCommand extends Command {
           voiceChannel,
         };
         message.guild.musicData.queue.push(song);
-        if (
-          message.guild.musicData.isPlaying === false
-          || typeof message.guild.musicData.isPlaying === 'undefined'
-        ) {
-          message.guild.musicData.isPlaying = true;
-          this.playSong(message.guild.musicData.queue, message);
-          return;
-        }
-        if (message.guild.musicData.isPlaying === true) {
+        if (message.guild.musicData.isPlaying) {
           message.say(`${song.title} added to queue`);
           return;
         }
+        message.guild.musicData.isPlaying = true;
+        this.playSong(message.guild.musicData.queue, message);
+        return;
       } catch (err) {
         console.error(err);
         message.say('Something went wrong, please try again later');
@@ -212,52 +205,50 @@ module.exports = class PlayCommand extends Command {
 
   playSong(queue, message) {
     let voiceChannel;
-    queue[0].voiceChannel
-      .join()
-      .then((connection) => {
-        const dispatcher = connection
-          .play(
-            ytdl(queue[0].url, {
-              quality: 'highestaudio',
-            }),
-          )
-          .on('start', () => {
-            message.guild.musicData.songDispatcher = dispatcher;
-            dispatcher.setVolume(message.guild.musicData.volume);
-            voiceChannel = queue[0].voiceChannel;
+    queue[0].voiceChannel.join().then((connection) => {
+      const dispatcher = connection
+        .play(
+          ytdl(queue[0].url, {
+            quality: 'highestaudio',
+          }),
+        )
+        .on('start', () => {
+          message.guild.musicData.songDispatcher = dispatcher;
+          dispatcher.setVolume(message.guild.musicData.volume);
+          voiceChannel = queue[0].voiceChannel;
 
-            const videoEmbed = new MessageEmbed()
-              .setThumbnail(queue[0].thumbnail)
-              .setColor('#e9f931')
-              .addField('Now Playing:', queue[0].title)
-              .addField('Duration:', queue[0].duration);
+          const videoEmbed = new MessageEmbed()
+            .setThumbnail(queue[0].thumbnail)
+            .setColor('#e9f931')
+            .addField('Now Playing:', queue[0].title)
+            .addField('Duration:', queue[0].duration);
 
-            if (queue[1]) videoEmbed.addField('Next Song:', queue[1].title);
+          if (queue[1]) videoEmbed.addField('Next Song:', queue[1].title);
 
-            message.say(videoEmbed);
-            const [song] = queue[0];
-            message.guild.musicData.nowPlaying = song;
+          message.say(videoEmbed);
+          const [song] = queue[0];
+          message.guild.musicData.nowPlaying = song;
 
-            return queue.shift();
-          })
-          .on('finish', () => {
-            if (queue.length >= 1) {
-              return this.playSong(queue, message);
-            }
-            message.guild.musicData.isPlaying = false;
-            message.guild.musicData.nowPlaying = null;
-            message.guild.musicData.songDispatcher = null;
-            return voiceChannel.leave();
-          })
-          .on('error', (e) => {
-            message.say('Cannot play song');
-            message.guild.musicData.queue.length = 0;
-            message.guild.musicData.isPlaying = false;
-            message.guild.musicData.nowPlaying = null;
-            console.error(e);
-            return voiceChannel.leave();
-          });
-      })
+          return queue.shift();
+        })
+        .on('finish', () => {
+          if (queue.length >= 1) {
+            return this.playSong(queue, message);
+          }
+          message.guild.musicData.isPlaying = false;
+          message.guild.musicData.nowPlaying = null;
+          message.guild.musicData.songDispatcher = null;
+          return voiceChannel.leave();
+        })
+        .on('error', (e) => {
+          message.say('Cannot play song');
+          message.guild.musicData.queue.length = 0;
+          message.guild.musicData.isPlaying = false;
+          message.guild.musicData.nowPlaying = null;
+          console.error(e);
+          return voiceChannel.leave();
+        });
+    })
       .catch((e) => {
         console.error(e);
         return voiceChannel.leave();
