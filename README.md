@@ -13,16 +13,17 @@ Visit [wiki](https://github.com/v0xat/priyanka_bot/wiki) or run the bot and use 
 
 - [Node & NPM](https://nodejs.org/en/) <br>
 - [FFMPEG](https://www.ffmpeg.org/)
+- [Canvas](https://discordjs.guide/popular-topics/canvas.html)
 
 ### Installation
 1. Download project
-2. Install dependencies `npm install`
+2. Install dependencies `make install`
 3. Create .env file with the following contents: <br>
 	prefix = <command_prefix> <br>
-	BOT_TOKEN = <discord_bot_token> <br>
+	BOT_TOKEN = <your_bot_token> <br>
 	ownerID = <your_discord_id>
 
-4. Run the bot with `npm start` or `node index.js`
+4. Run the bot with `make start` or `node index.js`
 5. Invite bot to your server and type `!help` in chat to get list of commands.
      
 ### Setting up APIs:
